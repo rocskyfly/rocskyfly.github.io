@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>人工智能与机器学习 | Just Do &quot;IT&quot;!</title><meta name="description" content="1.1 人工智能1.1.1 人工智能的基本概念人工智能指的是由机器或计算机程序学习如何完成通常由人类完成的需要智能形式的任务。智能机器可以是一个虚拟的或者物理的机器人，有自主的感知、认知、决策、学习、执行和社会协作能力，符合人类情感、伦理与道德观念。  1.1.2 人工智能涵盖的学科 计算机视觉：模式识别，图像处理等。感知的图像往往只占5%，提供一些蛛丝马迹；而后面的95%，包括功能、物理、因果"><meta name="keywords" content="AI"><meta name="author" content="rocky"><meta name="copyright" content="rocky"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rocskyfly.github.io/2017/06/03/1.%20%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="PH6KU3kOF4F9q92a2F8wzgd-3WsMkvoyfGpXANy5d_4"/><meta name="baidu-site-verification" content="I6h5XDjQdi"/><meta property="og:type" content="article"><meta property="og:title" content="人工智能与机器学习"><meta property="og:url" content="https://rocskyfly.github.io/2017/06/03/1.%20%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><meta property="og:site_name" content="Just Do &quot;IT&quot;!"><meta property="og:description" content="1.1 人工智能1.1.1 人工智能的基本概念人工智能指的是由机器或计算机程序学习如何完成通常由人类完成的需要智能形式的任务。智能机器可以是一个虚拟的或者物理的机器人，有自主的感知、认知、决策、学习、执行和社会协作能力，符合人类情感、伦理与道德观念。  1.1.2 人工智能涵盖的学科 计算机视觉：模式识别，图像处理等。感知的图像往往只占5%，提供一些蛛丝马迹；而后面的95%，包括功能、物理、因果"><meta property="og:image" content="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><meta property="article:published_time" content="2017-06-03T13:25:50.000Z"><meta property="article:modified_time" content="2020-08-06T11:05:07.487Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: '',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?062fa43d25a45e3739e2cb0cab1d4ff6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-06 19:05:07'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">32</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">1</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD"><span class="toc-number">1.</span> <span class="toc-text"> 1.1 人工智能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">1.1.1 人工智能的基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-2-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%B6%B5%E7%9B%96%E7%9A%84%E5%AD%A6%E7%A7%91"><span class="toc-number">1.2.</span> <span class="toc-text"> 1.1.2 人工智能涵盖的学科</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-3-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD-amp-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-amp-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.3.</span> <span class="toc-text">1.1.3 人工智能&amp;机器学习&amp;深度学习之间的关系</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-2-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-number">2.</span> <span class="toc-text">1.2 机器学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-1-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">1.2.1 机器学习定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-2-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">2.2.</span> <span class="toc-text">1.2.2 机器学习数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-3-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.3.</span> <span class="toc-text">1.2.3 机器学习类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-4-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E9%80%89%E6%8B%A9"><span class="toc-number">2.4.</span> <span class="toc-text">1.2.4 机器学习算法选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-5-%E5%BC%80%E5%8F%91%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.5.</span> <span class="toc-text">1.2.5 开发机器学习应用程序的步骤</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Just Do &quot;IT&quot;!</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">人工智能与机器学习</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-06-03T13:25:50.000Z" title="发表于 2017-06-03 21:25:50">2017-06-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:05:07.487Z" title="更新于 2020-08-06 19:05:07">2020-08-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">1. 人工智能与机器学习</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="1-1-人工智能"><a href="#1-1-人工智能" class="headerlink" title=" 1.1 人工智能"></a><font color=blue> 1.1 人工智能</font></h1><h2 id="1-1-1-人工智能的基本概念"><a href="#1-1-1-人工智能的基本概念" class="headerlink" title="1.1.1 人工智能的基本概念"></a><font color=DodgerBlue>1.1.1 人工智能的基本概念</font></h2><p>人工智能指的是由机器或计算机程序学习如何完成通常由人类完成的需要智能形式的任务。<br>智能机器可以是一个虚拟的或者物理的机器人，有自主的感知、认知、决策、学习、执行和社会协作能力，符合人类情感、伦理与道德观念。</p>
+<h2 id="1-1-2-人工智能涵盖的学科"><a href="#1-1-2-人工智能涵盖的学科" class="headerlink" title=" 1.1.2 人工智能涵盖的学科"></a><font color=DodgerBlue> 1.1.2 人工智能涵盖的学科</font></h2><ol>
+<li>计算机视觉：模式识别，图像处理等。感知的图像往往只占5%，提供一些蛛丝马迹；而后面的95%，包括功能、物理、因果、动机等等是要靠人的想象和推理过程来完成的。<a id="more"></a></li>
+<li>自然语言理解与交流：语音识别、合成、对话等。语言产生的基础是人要寻求合作。在语言产生之前，人类就已经有了十分丰富的认知基础，也就是上一节谈的那些表达。没有这样的认知基础，语言是空洞的符号，对话也不可能发生。</li>
+<li>认知与推理：包含各种物理和社会常识。当有了共同价值观的时候，就有社会道德和伦理规范，这都可以推导出来了。机器人要与人共生共存必须理解人的团体的社会道德和伦理规范。这个认识论是机器人发展的必经之道。</li>
+<li>机器人学：机械、控制、设计、运动规划、任务规划等。</li>
+<li>博弈与伦理：多代理人agents的交互、对抗与合作，机器人与社会融合等议题。获取、共享人类的价值观。</li>
+<li>机器学习：各种统计的建模、分析工具和计算的方法。<br><img src= "/img/loading.gif" data-lazy-src="https://raw.githubusercontent.com/rocskyfly/test/master/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%B6%B5%E7%9B%96%E7%9A%84%E5%AD%A6%E7%A7%91.png" alt="人工智能涵盖的学科"></li>
+</ol>
+<p><em><font color=OrangeRed>传统人工智能领域：逻辑推理、搜索博弈、专家系统等。<br/><br>人脑的功耗大约是10-25瓦。<br/>现在的人工智能和机器人，关键问题是缺乏物理的常识和社会的常识。</font> </em></p>
+<h2 id="1-1-3-人工智能-amp-机器学习-amp-深度学习之间的关系"><a href="#1-1-3-人工智能-amp-机器学习-amp-深度学习之间的关系" class="headerlink" title="1.1.3 人工智能&amp;机器学习&amp;深度学习之间的关系"></a><font color=DodgerBlue>1.1.3 人工智能&amp;机器学习&amp;深度学习之间的关系</font></h2><p><strong>机器学习（Machine Learning）：机器学习是对能通过经验自动改进的计算机算法的研究。机器学习是用数据或以往的经验，以此优化计算机程序的性能标准。</strong></p>
+<ul>
+<li>与传统的为解决特定任务、硬编码的软件程序不同，机器学习是用大量的数据来“训练”，通过各种算法从数据中学习如何完成任务。</li>
+<li>机器学习传统算法包括决策树学习、推导逻辑规划、聚类、强化学习和贝叶斯网络等等。</li>
+</ul>
+<p><strong>深度学习（Deep Learning）：一种实现机器学习的技术（深度神经网络）</strong></p>
+<ul>
+<li>“深度”指的是一个神经网络中的层的数量。浅层神经网络有一个所谓的隐藏层，而深度神经网络则不止一个隐藏层。多个隐藏层让深度神经网络能够以分层的方式学习数据的特征，因为简单特征可逐层叠加，形成更为复杂的特征。</li>
+<li>深度学习是一种基于对数据进行表征学习的方法。深度学习的好处是用非监督式或半监督式的特征学习和分层特征提取高效算法来替代手工获取特征。<br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD&amp;%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0&amp;%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png?raw=true" alt="人工智能&amp;机器学习&amp;深度学习之间的关系"></li>
+</ul>
+<p><em><font color=OrangeRed>任何一个模型由数据与任务来共同塑造。<br/>复杂的算法 ≤ 简单的学习算法 + 好的训练数据。<br/>当前的深度学习方法属于一个“大数据、小任务范式（big data for small task）”。针对某个特定的任务，如图像识别，设计一个简单的价值函数Loss function，用大量数据训练特定的模型。</font></em></p>
+<h1 id="1-2-机器学习"><a href="#1-2-机器学习" class="headerlink" title="1.2 机器学习"></a><font color=blue>1.2 机器学习</font></h1><h2 id="1-2-1-机器学习定义"><a href="#1-2-1-机器学习定义" class="headerlink" title="1.2.1 机器学习定义"></a><font color=DodgerBlue>1.2.1 机器学习定义</font></h2><p>Arthur Samuel： Machine Learning is the field of study that gives computers the ability to learn without being explicitly programmed (1959)。<br>Tom Mitchell：一个程序被认为能从经验E 中学习，解决任务T，达到性能度量值P，当且仅当，有了经验E 后，经过P 评判，程序在处理T 时的性能有所提升。</p>
+<h2 id="1-2-2-机器学习数据集"><a href="#1-2-2-机器学习数据集" class="headerlink" title="1.2.2 机器学习数据集"></a><font color=DodgerBlue>1.2.2 机器学习数据集</font></h2><ul>
+<li>训练数据集：当机器学习程序开始运行时，使用训练样本集作为算法的输人，完成算法训练。</li>
+<li>测试数据集：训练完成之后输人测试样本。比较测试样本预测的目标变量值与实际样本类别之间的差别，就可以得出算法的实际精确度。</li>
+</ul>
+<h2 id="1-2-3-机器学习类型"><a href="#1-2-3-机器学习类型" class="headerlink" title="1.2.3 机器学习类型"></a><font color=DodgerBlue>1.2.3 机器学习类型</font></h2><p><strong>1. 监督学习： </strong></p>
+<ul>
+<li>工作机制：通过学习被标识的数据集，发现数据集中输入数据与输出数据之间的对应关系；通过这种对应关系，将数据的输入映射到合适的输出。</li>
+<li>常见算法：线性回归、逻辑回归、决策树、kNN、SVM。<br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0.png?raw=true" alt="监督学习"></li>
+</ul>
+<p><strong>2. 无监督学习： </strong></p>
+<ul>
+<li>工作机制：通过学习未被标识的数据集，发现数据集的一些内在结构或某种规律；通过这种内在结构或某种规律，将数据集自行分类，从而可以标识数据集。</li>
+<li>常见算法：关联算法、聚类（k-means）、降维、推荐系统等。</li>
+</ul>
+<p><strong>3. 半监督式学习： </strong></p>
+<ul>
+<li>工作机制：首先试图对未标识数据进行建模，在此基础上再对标识的数据进行预测。</li>
+<li>特征：综合利用少量有标记的数据和大量没有标记的数据，来生成合适的分类函数。</li>
+</ul>
+<p><strong>4. 增强学习： </strong></p>
+<ul>
+<li>工作机制：机器被放在一个能让它通过反复试错来训练自己的环境中<ul>
+<li>输入数据直接反馈到模型，模型必须对此立刻作出调整。</li>
+<li>不断与环境进行交互，通过试错的方式来获得最佳策略。</li>
+<li>延迟奖惩的学习方式，从过去的经验中进行学习，非直接判断对错。</li>
+</ul>
+</li>
+<li>常见算法：马尔可夫决策过程、Q-Learning、时间差学习。</li>
+</ul>
+<h2 id="1-2-4-机器学习算法选择"><a href="#1-2-4-机器学习算法选择" class="headerlink" title="1.2.4 机器学习算法选择"></a><font color=DodgerBlue>1.2.4 机器学习算法选择</font></h2><p>算法是从数据中自动分析获得规律，并利用规律对未知数据进行预测的算法</p>
+<ol>
+<li><p>明确使用机器学习算法的目的，想要算法完成何种任务：</p>
+<ul>
+<li>若想要预测目标变量的值，则可以选择监督学习算法：需要进一步确定目标变量类型，若目标变量是离散型，则可以选择分类器算法；若目标变量是连续型的数值，则需要选择回归算法。</li>
+<li>若不是预测目标变量的值，可以选择无监督学习算法：进一步分析，若需要将数据是离散的，则使用聚类算法；若需要估计数据与每个分组的相似程度，则需要使用密度估计算法。</li>
+</ul>
+</li>
+<li><p>明确需要分析或收集的数据：对实际数据了解得越充分，越容易创建符合实际需求的应用程序</p>
+<ul>
+<li>特征值是离散型变量还是连续型变量。</li>
+<li>特征值中是否存在缺失的值，何种原因造成缺失值。</li>
+<li>数据中是否存在异常值，某个特征发生的频率如何等。</li>
+</ul>
+</li>
+</ol>
+<h2 id="1-2-5-开发机器学习应用程序的步骤"><a href="#1-2-5-开发机器学习应用程序的步骤" class="headerlink" title="1.2.5 开发机器学习应用程序的步骤"></a><font color=DodgerBlue>1.2.5 开发机器学习应用程序的步骤</font></h2><ol>
+<li>收集并处理数据：使用多种方法获取样本数据，分析数据确保数据集中没有垃圾数据，按算法要求将数据转换成特定的格式。</li>
+<li>训练算法：将格式化数据输入到算法，从中学习数据规律。</li>
+<li>测试算法：对于监督学习预测评估算法的目标变量值，对于无监督学习用其他的评测手段来检验算法的成功率。</li>
+<li>使用算法：执行实际任务，以检验上述步骤是否可以在实际环境中正常工作。</li>
+</ol>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">rocky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rocskyfly.github.io/2017/06/03/1.%20%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">https://rocskyfly.github.io/2017/06/03/1.%20%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rocskyfly.github.io" target="_blank">Just Do "IT"!</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"><div class="social-share" data-image="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2017/06/10/2.1%20%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/"><img class="prev-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">2.1 回归算法</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2017/09/17/情感分析/" title="情感分析"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-17</div><div class="relatedPosts_title">情感分析</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/10/GeneticAlgorithm/" title="基因算法求解函数极值"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-10</div><div class="relatedPosts_title">基因算法求解函数极值</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/06/CatsVsDogsRecognization/" title="猫狗图像识别"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-06</div><div class="relatedPosts_title">猫狗图像识别</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/02/MnistRecognization/" title="手写数字图片识别（mnist）"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-02</div><div class="relatedPosts_title">手写数字图片识别（mnist）</div></div></a></div><div class="relatedPosts_item"><a href="/2017/08/27/GenderPrediction/" title="男女性别预测"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-08-27</div><div class="relatedPosts_title">男女性别预测</div></div></a></div><div class="relatedPosts_item"><a href="/2017/08/26/BreastCancerPrediction/" title="良性恶性乳腺肿瘤预测"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-08-26</div><div class="relatedPosts_title">良性恶性乳腺肿瘤预测</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2020 By rocky</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: 'YLuVKqugCBNyBNoFY6T2wrBo-gzGzoHsz',
+      appKey: 'HceLSo2qhUCbb21WUiHD9bcY',
+      placeholder: '请在此输入您的留言...',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

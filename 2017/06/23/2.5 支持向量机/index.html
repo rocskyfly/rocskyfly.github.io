@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2.5 支持向量机 | Just Do &quot;IT&quot;!</title><meta name="description" content="非线性假设能够更好的建立分类模型，更好的拟合现实数据，但当特征量太多时非线性的计算量会非常的大，普通的逻辑回归模型不能有效地处理这么多的特征，支持向量机可以有效的解决此类的非线性问题。支持向量机（Support Vector Machine）是一种二类分类模型：基本模型定义为特征空间上的间隔最大的线性（或非线性）分类器，学习策略便是间隔最大化，将问题最终转化为一个凸二次规划问题的求解。  2.5."><meta name="keywords" content="AI"><meta name="author" content="rocky"><meta name="copyright" content="rocky"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rocskyfly.github.io/2017/06/23/2.5%20%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="PH6KU3kOF4F9q92a2F8wzgd-3WsMkvoyfGpXANy5d_4"/><meta name="baidu-site-verification" content="I6h5XDjQdi"/><meta property="og:type" content="article"><meta property="og:title" content="2.5 支持向量机"><meta property="og:url" content="https://rocskyfly.github.io/2017/06/23/2.5%20%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"><meta property="og:site_name" content="Just Do &quot;IT&quot;!"><meta property="og:description" content="非线性假设能够更好的建立分类模型，更好的拟合现实数据，但当特征量太多时非线性的计算量会非常的大，普通的逻辑回归模型不能有效地处理这么多的特征，支持向量机可以有效的解决此类的非线性问题。支持向量机（Support Vector Machine）是一种二类分类模型：基本模型定义为特征空间上的间隔最大的线性（或非线性）分类器，学习策略便是间隔最大化，将问题最终转化为一个凸二次规划问题的求解。  2.5."><meta property="og:image" content="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><meta property="article:published_time" content="2017-06-23T05:45:27.000Z"><meta property="article:modified_time" content="2020-08-06T11:07:26.206Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: '',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?062fa43d25a45e3739e2cb0cab1d4ff6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-06 19:07:26'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">32</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">1</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2-5-1-%E4%BA%86%E8%A7%A3%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="toc-number">1.</span> <span class="toc-text">2.5.1 了解支持向量机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E8%B5%B7%E6%BA%90%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text"> 线性分类起源：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text"> 线性分类器：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%97%B4%E9%9A%94%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text"> 函数间隔：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E9%97%B4%E9%9A%94%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text"> 几何间隔：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E9%97%B4%E8%B7%9D%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text"> 大间距分类器：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-5-2-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E6%8E%A8%E5%AF%BC"><span class="toc-number">2.</span> <span class="toc-text">2.5.2 支持向量机推导</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text"> 逻辑回归代价函数：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text"> 支持向量机代价函数：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-5-4-%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">2.5.4 核函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A0%B8%E5%87%BD%E6%95%B0%EF%BC%9F"><span class="toc-number">3.1.</span> <span class="toc-text"> 什么是核函数？ </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%87%BD%E6%95%B0%E8%A7%A3%E5%86%B3%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E8%BE%B9%E7%95%8C%E9%97%AE%E9%A2%98%E7%9A%84%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text"> 核函数解决非线性分类边界问题的思路： </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text"> 核函数实现支持向量机新特性： </span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-5-5-%E4%BD%BF%E7%94%A8%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="toc-number">4.</span> <span class="toc-text">2.5.5 使用支持向量机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E6%B1%82%E8%A7%A3%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0-%CE%B8-%EF%BC%8C%E9%9C%80%E8%A6%81%E5%81%9A%E7%9A%84%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="toc-number">4.1.</span> <span class="toc-text"> 选择支持向量机求解代价函数参数\(θ\)，需要做的工作： </span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Just Do &quot;IT&quot;!</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">2.5 支持向量机</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-06-23T05:45:27.000Z" title="发表于 2017-06-23 13:45:27">2017-06-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:07:26.206Z" title="更新于 2020-08-06 19:07:26">2020-08-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/2-%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/">2. 监督学习算法</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>非线性假设能够更好的建立分类模型，更好的拟合现实数据，但当特征量太多时非线性的计算量会非常的大，普通的逻辑回归模型不能有效地处理这么多的特征，支持向量机可以有效的解决此类的非线性问题。<br>支持向量机（Support Vector Machine）是一种二类分类模型：基本模型定义为特征空间上的间隔最大的线性（或非线性）分类器，学习策略便是间隔最大化，将问题最终转化为一个凸二次规划问题的求解。</p>
+<a id="more"></a>
+<h1 id="2-5-1-了解支持向量机"><a href="#2-5-1-了解支持向量机" class="headerlink" title="2.5.1 了解支持向量机"></a><font color=blue>2.5.1 了解支持向量机</font></h1><h2 id="线性分类起源："><a href="#线性分类起源：" class="headerlink" title=" 线性分类起源："></a><font color=DodgerBlue> 线性分类起源：</font></h2><p><strong>逻辑回归：</strong>将特性的线性组合作为自变量，由于自变量的取值范围是负无穷到正无穷。因此使用Sigmoid函数将自变量映射到(0,1)上，映射后的值被认为是属于y=1的概率：</p>
+<pre><code>$$h_θ (x)=g(z)=g(θ^T X)=\frac &#123;1&#125;&#123;1+e^&#123;-θ^T X&#125;&#125;=
+\begin&#123;cases&#125;
+    1\ \ \ \ \ \ 若y=1希望h_θ (x)≈1,θ^T X≫0 )     \\
+    0\ \ \ \ \ \ 若y=0希望h_θ (x)≈0,θ^T X≪0)
+\end&#123;cases&#125;
+$$
+</code></pre><p><strong>线性分类函数：</strong>将结果标签\(y=0\)和\(y=1\)替换为\(y=-1, y=1\)，然后将\(θ_1 x_1+θ_2 x_2+⋯θ_n x_n\)替换成\(W^T X\)，将\(θ_0\)替换成\(b\):</p>
+<pre><code> $$g(z)=g(W^T X+b)=\frac &#123;1&#125;&#123;1+e^&#123;W^T X+b&#125;&#125;=
+\begin&#123;cases&#125;
+    1\ \ \ \ \ \ \ 若y=1,W^T X+b≫0\    \\
+    -1\ \ \ \ \ \ 若y=0,W^T X+b≪0) 
+\end&#123;cases&#125;
+$$
+</code></pre><font color=OrangeRed>线性函数在一维空间里就是一个点，在二维空间里就是一条直线，三维空间里就是一个平面，如果不关注空间的维数，这种线性函数还有一个统一的名称“超平面”。</font>
+
+<h2 id="线性分类器："><a href="#线性分类器：" class="headerlink" title=" 线性分类器："></a><font color=DodgerBlue> 线性分类器：</font></h2><p><strong>描述：</strong>给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。若用\(x\)表示数据点，用\(y\)表示类别（y可以取1或者-1代表两个类），一个线性分类器的学习目标便是要在n维的数据空间中找到一个超平面，其方程表示为：<script type="math/tex">W^T X+b=0</script></p>
+<p><strong>直观理解</strong>：</p>
+<ul>
+<li>假设有一个二维平面，平面上有两种不同的数据，分别用圈和叉表示，假设可以用一条直线将这两类数据分开，这条直线就相当于一个超平面，超平面一边的数据点所对应的y全是-1，另一边所对应的\(y\)全是1。</li>
+<li>这个超平面可以用分类函数\(f(x)=w^T x+b\)表示，当\(f(x)=0\)时，\(x\)便是位于超平面上的点，而\(f(x)&gt;0\)的点对应\(y=1\)的数据点，\(f(x)&lt;0\)的点对应\(y=-1\)的点。</li>
+<li>在进行分类的时候，遇到一个新的数据点\(x\)，将\(x\)代入\(f(x)\)中，如果\(f(x)<0\\)则将x的类别赋为-1，如果\\(f(x)>0\)则将x的类别赋为1。</li>
+<li>直观而言这个超平面应该是最适合分开两类数据的直线。而判定“最适合”的标准就是这条直线离直线两边的数据的间隔最大。所以得寻找有着最大间隔的超平面。</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.3%E8%B6%85%E5%B9%B3%E9%9D%A2.png?raw=true" alt="超平面">  </p>
+<h2 id="函数间隔："><a href="#函数间隔：" class="headerlink" title=" 函数间隔："></a><font color=DodgerBlue> 函数间隔：</font></h2><script type="math/tex; mode=display">γ ̂=y(w^T x+b)=yf(x)</script><ul>
+<li>在超平面\(w^T x+b=0\)确定的情况下，\(|w^T x+b|\)能够表示点\(x\)到距离超平面的远近.</li>
+<li>通过观察\(w^T x+b\)的符号与类标记\(y\)的符号是否一致可判断分类是否正确，可以用\(y(w^T x+b)\)的正负性来判定或表示分类的正确性。</li>
+<li>超平面\((w,b)\)关于所有样本点\( (x^{(i)} , y^{(i)}) \)的函数间隔最小值，便为超平面关于训练数据集T的函数间隔：<script type="math/tex">γ ̂=min_{i=1,2…n} γ ̂^{(i)}</script></li>
+</ul>
+<h2 id="几何间隔："><a href="#几何间隔：" class="headerlink" title=" 几何间隔："></a><font color=DodgerBlue> 几何间隔：</font></h2><script type="math/tex; mode=display">γ ̃=γ ̂/‖w‖</script><ul>
+<li>函数间隔存在的问题：若成比例的改变\(w\)和\(b\)（如将它们改成\(2w\)和\(2b\)），则函数间隔的值\(f(x)\)却变成了原来的2倍，虽然此时超平面没有改变。</li>
+<li>几何间隔就是函数间隔除以\(‖w‖\)，而且函数间隔\(y(w^T x+b)=yf(x)\)实际上就是\(|f(x)|\)，几何间隔\(|f(x)|⁄‖w‖ \)才是直观上的点到超平面的距离。</li>
+</ul>
+<h2 id="大间距分类器："><a href="#大间距分类器：" class="headerlink" title=" 大间距分类器："></a><font color=DodgerBlue> 大间距分类器：</font></h2><p><strong>描述：</strong>当超平面离数据点的“间隔”越大，分类的确信度也越大。所以，为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个“间隔”值。这个间隔就是图中Gap的一半。</p>
+<p><strong>公式推导：</strong>最大间隔分类器的目标函数可以定义为</p>
+<pre><code>$$
+    \begin &#123;cases&#125;
+    max_i γ ̃= max_i γ ̂/‖w‖ \\
+    γ ̂^&#123;(i)&#125; = y^&#123;(i)&#125; (w^T x^&#123;(i)&#125;+b)≥γ ̂\ \ \ \ \ \  (i=1,…n)
+    \end &#123;cases&#125;
+$$
+为了方便推导和优化，令γ ̂=1，且这样做对目标函数的优化没有影响：
+$$
+    \begin &#123;cases&#125;
+    max_i\ γ ̃= max\ 1/‖w‖ =min\ ⁡   w^2    \\
+    γ ̂^&#123;(i)&#125; = y^&#123;(i)&#125; (w^T x^&#123;(i)&#125;+b)≥1 \ \ \ \ \  (i=1,…n)
+    \end &#123;cases&#125;
+$$
+</code></pre><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.4%E6%9C%80%E5%A4%A7%E5%88%86%E7%B1%BB%E5%99%A8.png?raw=true" alt="最大分类器"></p>
+<p><strong>直观理解：</strong>中间的实线便是寻找到的最优超平面，其到两条虚线边界的距离相等，这个距离便是几何间隔\(γ ̃\)，两条虚线间隔边界之间的距离等于\(2γ ̃\)，而虚线间隔边界上的点则是支持向量。由于这些支持向量刚好在虚线间隔边界上，所以它们满足\(y(w^T x+b)=1\)，而对于所有不是支持向量的点，则显然有\(y(w^T x+b)&gt;1\)<br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.5%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E6%9C%80%E4%BC%98%E8%B6%85%E5%B9%B3%E9%9D%A2.png?raw=true" alt="支持向量机最优超平面"></p>
+<h1 id="2-5-2-支持向量机推导"><a href="#2-5-2-支持向量机推导" class="headerlink" title="2.5.2 支持向量机推导"></a><font color=Blue>2.5.2 支持向量机推导</font></h1><h2 id="逻辑回归代价函数："><a href="#逻辑回归代价函数：" class="headerlink" title=" 逻辑回归代价函数："></a><font color=DodgerBlue> 逻辑回归代价函数：</font></h2><script type="math/tex; mode=display">Cost(h_θ (x),y)=-y logh_θ (x)-(1-y)  log(1-h_θ (x))\\
+=-y log(1/(1+e^{-θ^T X} ))-(1-y)log(1-1/(1+e^{-θ^T X}))</script><script type="math/tex; mode=display">
+    \begin {cases}
+    若y=1，希望Ζ=θ^T X≫0：Cost(h_θ (x),y)=-log(1/(1+e^{-θ^T X} )) \\
+    若y=0，希望Ζ=θ^T X≪0：Cost(h_θ (x),y)=- log(1-1/(1+e^{-θ^T X}))
+    \end {cases}</script><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.6%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0.png?raw=true" alt="逻辑回归代价函数"></p>
+<h2 id="支持向量机代价函数："><a href="#支持向量机代价函数：" class="headerlink" title=" 支持向量机代价函数："></a><font color=DodgerBlue> 支持向量机代价函数：</font></h2><p>由逻辑回归到支持向量机，修改代价函数曲线如下：<br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.7%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0.png?raw=true" alt="SVM代价函数"></p>
+<script type="math/tex; mode=display">h_θ (x)=
+         \begin {cases}
+         1\ \ \ \ \ if\ Ζ= θ^T X≥1 \\
+         0\ \ \ \ \ if Ζ= θ^T X<-1
+        \end {cases}</script><script type="math/tex; mode=display">min_θ C ∑_{i=1}^m (y^{(i)} cost_1 (θ^T x^{(i) } )+(1-y^{(i)}) cost_0 (θ^T x^{(i)})) + \frac {1}{2} ∑_{j=1}^n θ_j^2</script><p><strong>支持向量机可以看作是大间距分类器：</strong>若C非常大，则最小化代价函数的时候，将会很希望找到一个使第一项为0 的最优解：\(y^{(i)} cost_1 (θ^T x^{(i) } )+(1-y^{(i)}) cost_0 (θ^T x^{(i)})≈0\)</p>
+<ul>
+<li>训练样本\(y=1\)，需要找到一个\(θ\)，使得\(θ^T x≥1\)； \(y=0\)，需要找到一个\(θ\)，使得\(θ^T x≤-1\)。</li>
+<li>当求解这个优化问题的时候，会得到一个非常有趣的决策边界。<script type="math/tex; mode=display">y^{(i)} cost_1 (θ^T x^{(i) } )+(1-y^{(i)}) cost_0 (θ^T x^{(i)})≈0\\
+   → min\ 1/2 ∑_{j=1}^n θ_j^2</script></li>
+</ul>
+<p><strong>关于C值选择：</strong></p>
+<ul>
+<li>\(C\)不要设置太大，当 \(C\)不是非常非常大时，可忽略掉一些异常点的影响，得到更好的决策界</li>
+<li>\(C≈1/λ\)：\(C\)较大时，相当于\(λ \)较小，可能会导致过拟合，高方差。\(C\)较小时，相当于\(λ \)较大，可能会导致低拟合，高偏差。</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.9C%E5%80%BC%E9%80%89%E6%8B%A9.png?raw=true" alt="C值选择"></p>
+<h1 id="2-5-4-核函数"><a href="#2-5-4-核函数" class="headerlink" title="2.5.4 核函数"></a><font color=blue>2.5.4 核函数</font></h1><h2 id="什么是核函数？"><a href="#什么是核函数？" class="headerlink" title=" 什么是核函数？ "></a><font color=DodgerBlue> 什么是核函数？ </font></h2><p>SVM在处理非线性分类边界问题时， 通过选择一个核函数，将数据映射到高维空间，来解决在原始空间中线性不可分的问题。</p>
+<p>在线性不可分的情况下，支持向量机首先在低维空间中完成计算，然后通过核函数将输入空间映射到高维特征空间，最终在高维特征空间中构造出最优分离超平面，从而把平面上本身不好分的非线性数据分开。将\(γ ̂^{(i)} = y^{(i)} (w^T x^{(i)} + b)≥1\ \ \ \ \  (i=1,…n)\)中的\(x\)换为高维空间。</p>
+<h2 id="核函数解决非线性分类边界问题的思路："><a href="#核函数解决非线性分类边界问题的思路：" class="headerlink" title=" 核函数解决非线性分类边界问题的思路： "></a><font color=DodgerBlue> 核函数解决非线性分类边界问题的思路： </font></h2><ol>
+<li><p>给定一个训练实例\(x\)，利用x的各个特征与预先选定的地标 \( ι^{(1)}, ι^{(2)}, ι^{(3)} \) 的近似程度来选取新的特征\(f_1,f_2,f_3\)</p>
+<script type="math/tex; mode=display">f_1=similarity(x,ι^{(1)})</script><script type="math/tex; mode=display">f_2=similarity(x,ι^{(2)})</script><script type="math/tex; mode=display">f_3=similarity(x,ι^{(3)})</script><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.11%E6%A0%B8%E5%87%BD%E6%95%B0.png?raw=true" alt="核函数"></p>
+</li>
+<li><p>\(similarity(x,ι^{(i)} )\)就是核函数，选择一核函数，记为\(K(x,ι^{(i)})\)，利用核函数模型计算新特征，若选用的核函数为高斯核函数，则：</p>
+<script type="math/tex; mode=display">f_1=similarity(x,ι^{(1)})=K(x,ι^{(1)})=exp(-||x-ι^{(1)}||^2/(2σ^2 ))</script><script type="math/tex; mode=display">f_2=similarity(x,ι^{(2)})=K(x,ι^{(2)})=exp(-||x-ι^{(2)}||^2/(2σ^2 ))</script><script type="math/tex; mode=display">f_3=similarity(x,ι^{(3)})=K(x,ι^{(3)})=exp(-||x-ι^{(3)}||^2/(2σ^2 ))</script></li>
+</ol>
+<p>含义： 若\(x≈ι^{(1)}，f_1≈1\)；若\(x\ \ far \ \ from \ \ \ ι^{(1)},f_1≈0\) 随着\(x\)的改变\( f \)值改变的速率受到\( σ^2\)的控制。<br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.12G%E7%9A%84%E7%90%86%E8%A7%A3.png?raw=true" alt="\\( σ^2\\)"><br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.12%E6%A0%B8%E5%87%BD%E6%95%B0%E7%A4%BA%E4%BE%8B.png?raw=true" alt="核函数示例"></p>
+<h2 id="核函数实现支持向量机新特性："><a href="#核函数实现支持向量机新特性：" class="headerlink" title=" 核函数实现支持向量机新特性： "></a><font color=DodgerBlue> 核函数实现支持向量机新特性： </font></h2><p><strong>选择地标：</strong>通常是根据训练集的数量选择地标的数量，即如果训练集中有\(m\)个实例 \( (x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}) ,…, (x^{(m)}, y^{(m)}) \) ，则选取\(m\)个地标，并且令： \(ι^{(1)} = x^{(1)}, ι^{(2)} = x^{(2)} ,…, ι^{(m)} = x^{(m)}\) ,得到的新特征是建立在原有特征与训练集中所有其他特征之间距离的基础之上。</p>
+<p><strong>计算新的特征向量：</strong>对于特定的训练实例 \(x^{(i)}\)计算新的特征向量 \(f^{(i)}\)</p>
+<pre><code>$$
+    f^&#123;(i)&#125;=
+    \begin &#123;cases&#125;
+        f_0^&#123;(i)&#125;=1     \\
+        f_1^&#123;(i)&#125;=similarity(x^&#123;(i)&#125;,ι^&#123;(1)&#125; )  \\
+        f_2^&#123;(i)&#125;=similarity(x^&#123;(i)&#125;,ι^&#123;(2)&#125; )  \\
+        ... \\
+        f_i^&#123;(i)&#125;=similarity(x^&#123;(i)&#125;,ι^&#123;(i)&#125; )=e^0=1  \\
+        ... \\
+        f_m^&#123;(i)&#125;=similarity(x^&#123;(i)&#125;,ι^&#123;(m)&#125; )  \\
+    \end &#123;cases&#125;
+$$
+</code></pre><p><strong>SVM代价函数：</strong></p>
+<script type="math/tex; mode=display">min_θ C∑_{i=1}^m (y^{(i)} cost_1 (θ^T f^{(i) } )+(1-y^{(i)}) cost_0 (θ^T f^{(i)})) + 1/2 ∑_{j=1}^n θ_j^2</script><ul>
+<li>在具体实施过程中，需要对最后的归一化项进行些微调整：\(∑_{j=1}^{n=m} θ_j^2 =θ^T θ\)</li>
+<li>根据不同的核函数选择矩阵\(M\)：\(θ^T Mθ\)代替\(θ^T θ\)，简化计算。</li>
+<li>理论上讲，可以在逻辑回归中使用核函数，但使用\(M\)来简化计算的方法不适用与逻辑回归，因此计算将非常耗费时间。</li>
+</ul>
+<h1 id="2-5-5-使用支持向量机"><a href="#2-5-5-使用支持向量机" class="headerlink" title="2.5.5 使用支持向量机"></a><font color=blue>2.5.5 使用支持向量机</font></h1><p>最小化支持向量机的代价函数可以使用现有的软件包，如liblinear，libsvm 等.</p>
+<h2 id="选择支持向量机求解代价函数参数-θ-，需要做的工作："><a href="#选择支持向量机求解代价函数参数-θ-，需要做的工作：" class="headerlink" title=" 选择支持向量机求解代价函数参数\(θ\)，需要做的工作： "></a><font color=DodgerBlue> 选择支持向量机求解代价函数参数\(θ\)，需要做的工作： </font></h2><p><strong>选择合适的代价函数中的参数C：</strong></p>
+<ul>
+<li>\(C\)较大时，相当于\(λ \)较小，可能会导致过拟合，高方差。</li>
+<li>\(C\)较小时，相当于\(λ \)较大，可能会导致低拟合，高偏差。</li>
+</ul>
+<p><strong>选择合适的核函数：</strong>核函数需要满足Mercers定理，才能被支持向量机的优化软件正确处理</p>
+<ul>
+<li>线性核函数（无核函数）：当\(θ^T x≥0\)时，预测\(y=1 \)。当不需要采用非常复杂的核函数，或训练集特征非常多，实例非常少的时候，可以采用这种不带核函数的支持向量机。</li>
+<li>高斯核函数：<script type="math/tex">f_i=exp(-||x-ι^{(i)}||^2/2σ^2 ),where\ ι^{(i)}=x^{(i)}</script><ul>
+<li>需要选择合适的\(σ\)：\(σ\)较大时，导致高方差；\(σ\)较小时，导致高偏差。</li>
+<li>需要进行特征缩放：<script type="math/tex">||x-ι||^2=(x_1-ι_1)^2+(x_2-ι_2)^2+⋯+(x_n-ι_n)^2</script></li>
+</ul>
+</li>
+<li>多项式核函数（Polynomial Kernel）：&lt;/br&gt;\(f=similarity(x,ι)=K(x,ι)=(x^T ι+constant)^{degree}\)</li>
+<li>字符串核函数（String kernel）、卡方核函数（chi-square kernel）、直方图交集核函数（histogram<pre><code> intersection kernel）
+</code></pre></li>
+</ul>
+<p><strong>支持向量机多类分类问题：</strong></p>
+<ul>
+<li>多类分类问题：若一共有\(k\)个类，则需要\(k\)个模型，以及\(k\) 个参数向量\(θ\)。</li>
+<li>同样也可以训练\(k\)个支持向量机来解决多类分类问题。但是大多数支持向量机软件包都有内置的多类分类功能，只要直接使用即可。<br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/2.5.13SVM%E5%A4%9A%E5%88%86%E7%B1%BB.png?raw=true" alt="SVM多分类"></li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">rocky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rocskyfly.github.io/2017/06/23/2.5%20%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">https://rocskyfly.github.io/2017/06/23/2.5%20%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rocskyfly.github.io" target="_blank">Just Do "IT"!</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"><div class="social-share" data-image="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/07/02/2.6%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%AE%97%E6%B3%95/"><img class="prev-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">2.6 神经网络算法</div></div></a></div><div class="next-post pull-right"><a href="/2017/06/17/2.4%20%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/"><img class="next-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">2.4 贝叶斯分类器</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2017/06/03/1. 人工智能与机器学习/" title="人工智能与机器学习"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-06-03</div><div class="relatedPosts_title">人工智能与机器学习</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/17/情感分析/" title="情感分析"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-17</div><div class="relatedPosts_title">情感分析</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/10/GeneticAlgorithm/" title="基因算法求解函数极值"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-10</div><div class="relatedPosts_title">基因算法求解函数极值</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/06/CatsVsDogsRecognization/" title="猫狗图像识别"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-06</div><div class="relatedPosts_title">猫狗图像识别</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/02/MnistRecognization/" title="手写数字图片识别（mnist）"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-02</div><div class="relatedPosts_title">手写数字图片识别（mnist）</div></div></a></div><div class="relatedPosts_item"><a href="/2017/08/27/GenderPrediction/" title="男女性别预测"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-08-27</div><div class="relatedPosts_title">男女性别预测</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2020 By rocky</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: 'YLuVKqugCBNyBNoFY6T2wrBo-gzGzoHsz',
+      appKey: 'HceLSo2qhUCbb21WUiHD9bcY',
+      placeholder: '请在此输入您的留言...',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

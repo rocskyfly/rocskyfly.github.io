@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Just Do &quot;IT&quot;! - 狐狼逐月</title><meta name="description" content="知行合一"><meta name="author" content="rocky"><meta name="copyright" content="rocky"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rocskyfly.github.io/page/2/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="PH6KU3kOF4F9q92a2F8wzgd-3WsMkvoyfGpXANy5d_4"/><meta name="baidu-site-verification" content="I6h5XDjQdi"/><meta property="og:type" content="website"><meta property="og:title" content="Just Do &quot;IT&quot;!"><meta property="og:url" content="https://rocskyfly.github.io/page/2/"><meta property="og:site_name" content="Just Do &quot;IT&quot;!"><meta property="og:description" content="知行合一"><meta property="og:image" content="https://rocskyfly.github.io/img/avatar.png"><meta property="article:published_time" content="2020-08-06T11:10:54.165Z"><meta property="article:modified_time" content="2020-08-06T11:10:54.165Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: '',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?062fa43d25a45e3739e2cb0cab1d4ff6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2020-08-06 19:10:54'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">32</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">1</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(http://ww1.sinaimg.cn/large/9f9cf593gy1gheyxb5p72j21w119cwl2.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Just Do &quot;IT&quot;!</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site_title">Just Do &quot;IT&quot;!</h1><div id="site_subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/rocskyfly" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:rocskyfly@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div id="scroll_down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2017/08/22/SpamEmailClassifier/" title="垃圾邮件分类器">     <img class="post_bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="垃圾邮件分类器"></a></div><div class="recent-post-info"><a class="article-title" href="/2017/08/22/SpamEmailClassifier/" title="垃圾邮件分类器">垃圾邮件分类器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-22T14:19:45.000Z" title="发表于 2017-08-22 22:19:45">2017-08-22</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:10:15.941Z" title="更新于 2020-08-06 19:10:15">2020-08-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Machine-Learning-Project/">Machine Learning Project</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/AI/">AI</a></span></div><div class="content">数据集说明：数据集包含5574条数据，每条数据包含邮件类型（是否为垃圾邮件）以及邮件的标题。&lt;/br&gt;程序说明：采用逻辑回归算法，由Python语言实现垃圾邮件分类。&lt;/br&gt;算法理论请参照：逻辑回归算法、贝叶斯分类器、偏斜类误差度量&lt;/br&gt;Ipynb演示文件：Ipynb文件&lt;/br&gt;Python代码：Python代码&lt;/br&gt;
+
+12345678&quot;&quot;&quot;Reading a text-based dataset by pandas&quot;&quot;&quot;# 读取以制表符分隔值的文本文件，定义第一列列名为type，余下所有的列为一整体，列名为message。import pandas as pdsms = pd.read_table(&#x27;sms.tsv&#x27;, header=None, names=[&#x27;type&#x27;, &#x27;message&#x27;])#查看sms Dataframe的前五行内容。sms.head()
+12# 统计type列中不同类 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2017/08/20/IrisClassifier/" title="鸢尾花分类器">     <img class="post_bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="鸢尾花分类器"></a></div><div class="recent-post-info"><a class="article-title" href="/2017/08/20/IrisClassifier/" title="鸢尾花分类器">鸢尾花分类器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-20T08:21:11.000Z" title="发表于 2017-08-20 16:21:11">2017-08-20</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:10:02.167Z" title="更新于 2020-08-06 19:10:02">2020-08-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Machine-Learning-Project/">Machine Learning Project</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/AI/">AI</a></span></div><div class="content">数据集说明：Iris数据集也称鸢尾花卉数据集是常用的分类实验数据集，是一类多重变量分析的数据集。数据集包含150个数据集，分为3类，每类50个数据。每个数据包含4个属性：花萼长度，花萼宽度，花瓣长度，花瓣宽度。依据4个属性预测鸢尾花卉属于（Setosa，Versicolour，Virginica）三个种类中的哪一类。&lt;/br&gt;程序说明：采用三种不同的机器学习算法（sklearn KNN、Decision Tree、自实现的KNN）由Python语言实现鸢尾花卉的分类。&lt;/br&gt;算法理论请参照：KNN算法、决策树算法&lt;/br&gt;Ipynb演示文件：Ipynb文件&lt;/br&gt;Python代码：Python代码&lt;/br&gt;
+
+123#This data sets consists of 3 different types of irises’ (Setosa, Versicolour, and Virginica) #petal and sepal length, stored in a 150x4 numpy.ndarray#The r ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2017/08/19/5.5%20%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="5.5 自动化机器学习">     <img class="post_bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="5.5 自动化机器学习"></a></div><div class="recent-post-info"><a class="article-title" href="/2017/08/19/5.5%20%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="5.5 自动化机器学习">5.5 自动化机器学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-19T13:21:11.000Z" title="发表于 2017-08-19 21:21:11">2017-08-19</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:09:26.604Z" title="更新于 2020-08-06 19:09:26">2020-08-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/5-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">5. 机器学习系统设计</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/AI/">AI</a></span></div><div class="content">自动化机器学习起源于网格搜索概念，是一种流水线（也称管道）。它通过搜索方法、变换特征、混合参数值来获得最佳解决方案。TPOT是自动化机器学习的一个应用框架，提供了遗传算法这样的应用，可用来在某个配置中混合各个参数并达到最佳设置。常见的自动机器学习库：TPOT、Auto-Sklearn、Auto-Weka、Machine-JS、DataRobot。
+
+5.5.1 遗传算法基础遗传算法（Genetic Algorithm）描述:遵循适者生存、优胜劣汰的原则，是一类借鉴生物界自然选择和自然遗传机制的随机化搜索算法，属于启发式搜索算法一种。&lt;/br&gt;模拟一个人工种群的进化过程，通过选择、交叉以及变异等机制，在每次迭代中都保留一组候选个体，重复此过程，种群经过若干代进化后，理想情况下其适应度达到近似最优的状态。
+遗传算法组成:
+基因：一个遗传因子。 
+染色体：包含一组基因，个体是包含某一染色体。
+种群：是染色体的集合，由个体组成。
+适应度函数：个体适应度判断，适者生存。 
+选择（Selection）：优胜劣汰，仅适应环境的个体可以繁衍后代。
+交叉（Corssover）：新个体会遗传父 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2017/08/15/5.4%20%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="5.4 大型机器学习系统应用技术">     <img class="post_bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="5.4 大型机器学习系统应用技术"></a></div><div class="recent-post-info"><a class="article-title" href="/2017/08/15/5.4%20%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="5.4 大型机器学习系统应用技术">5.4 大型机器学习系统应用技术</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-15T14:21:11.000Z" title="发表于 2017-08-15 22:21:11">2017-08-15</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:09:20.432Z" title="更新于 2020-08-06 19:09:20">2020-08-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/5-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">5. 机器学习系统设计</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/AI/">AI</a></span></div><div class="content">5.4.1 机器学习系统上限分析在大型机器学习的应用中，通常需要通过几个步骤才能进行最终的预测，一般先通过上限分析知道哪一部分最值得花时间和精力去改善，上限分析是从管道开始的部分，逐级手工提供 100%正确的输出结果，然后看应用的整体效果提升了多少，找出瓶颈。
+
+ 5.2.2 大规模数据机器学习通过学习曲线诊断，确定合适大小的训练集假若应对一个有 100 万条记录的训练集，以线性回归模型为例，每一次梯度下降迭代，都需要计算训练集的误差的平方和，计算代价非常大。&lt;/br&gt;通过绘制学习曲线判定大规模的训练集是否必要，也许只用 1000记录也能获得较好的效果。
+ 采用随机梯度下降法，加快训练速度 Stochastic Gradient Descent—随机梯度下降法
+适用场景：若一定需要一个大规模的训练集，可以尝试使用随机梯度下降法来代替批量梯度下降法。定义单一训练实例的代价函数为：
+cost(θ,(x^{(i}),y^{(i)}))=\frac {1}{2} (h_θ (x^{(i)})-y^{(i)})^2算法描述：首先将训练集数据打乱，然后运行随机梯度下降算法，在每一次计算 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2017/08/13/5.3%20%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" title="5.3 如何改进机器学习算法?">     <img class="post_bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="5.3 如何改进机器学习算法?"></a></div><div class="recent-post-info"><a class="article-title" href="/2017/08/13/5.3%20%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" title="5.3 如何改进机器学习算法?">5.3 如何改进机器学习算法?</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-13T07:21:11.000Z" title="发表于 2017-08-13 15:21:11">2017-08-13</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:09:09.798Z" title="更新于 2020-08-06 19:09:09">2020-08-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/5-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">5. 机器学习系统设计</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/AI/">AI</a></span></div><div class="content">5.3.1 机器学习算法一般改进方法 获得更多的训练实例可解决高方差（未来）。
+
+ 改变特征数量减少特征数量可解决高方差（未来），增加特征数量可解决高偏差（现在）。
+ 改变多项式次数减少多项式次数可解决高方差（未来），增加多项式次数可解决高偏差（现在）。
+ 改变正则化参数作用：减小正则化参数可解决高偏差（现在），增加正则化参数可解决高方差（未来）。
+基本思想：基于模型复杂性对其进行惩罚，偏好那些相对简单的能更好的泛化的模型，可以解决过度拟合问题。通过增加一个额外的项到代价函数上，这个项叫做正则化项，消除或降低过拟合的影响，缺点是惩罚会造成欠拟合很难校准。
+正则化分类：
+L1 正则化：\(C=C_0+λ/n ∑_w |w|\) ，在原始代价函数 \(C_0\) 上加上一个权重绝对值的和。倾向于聚集权重在相对少量的高重要度连接上，而其他权重就会被驱使向 0 接近。 
+L2正则化：\(C=C_0+λ/n ∑_w w^2\)，在原始代价函数 \(C_0\) 上加上一个权重平方和。可以看做是一种寻找小的权重和最小化原始的代价函数之间的折中，\(λ\)  越小就偏向于最小化原始代价函数，反之倾向于 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2017/08/12/5.2%20%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" title="5.2 如何评估机器学习算法?">     <img class="post_bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="5.2 如何评估机器学习算法?"></a></div><div class="recent-post-info"><a class="article-title" href="/2017/08/12/5.2%20%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" title="5.2 如何评估机器学习算法?">5.2 如何评估机器学习算法?</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-12T03:49:12.000Z" title="发表于 2017-08-12 11:49:12">2017-08-12</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:09:01.960Z" title="更新于 2020-08-06 19:09:01">2020-08-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/5-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">5. 机器学习系统设计</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/AI/">AI</a></span></div><div class="content">一般先通过交叉验证的方法，获取算法的测试数据，然后运用一系列的评估指标来量化算法优劣，如：学习曲线诊断、偏差方差诊断、偏斜误差度量等。
+
+5.2.1 机器算法评估基础  测试集划分方法： 常规方法：
+将数据集随机分成训练集（70%）和测试集（30%）。
+算法通过训练集训练后，得到使代价函数 \(J(θ)\) 最小的 \(θ\)参数，获得模型。
+对测试集运用该模型，计算代价函数误差指标 \(J{test} (θ)\) 或误分类比率指标 \(Test{error}\)。
+根据计算出的指标值来评估机器学习算法的优劣。
+
+常规方法弊可能可以很好的拟合数据集，但是可能不能很好的推广到一般情况。
+
+交叉验证集方法：
+将数据集随机分成训练集（60%）、交叉验证集（20%）和测试集（20%）。
+算法通过训练集训练后，使代价函数 \(J_{train} (θ)\) 最小的 \(θ\)参数，获得模型。
+对交叉验证集运用该模型，计算得出交叉验证误差 \(J_{cv} (θ)\)，选取代价函数值最小的模型。
+用选出的模型对测试集计算得出推广误差，即代价函数的 \(J_{test} (θ)\)。
+
+ 数据泛化与 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2017/08/09/5.1%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="5.1 机器学习系统设计最佳实践">     <img class="post_bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="5.1 机器学习系统设计最佳实践"></a></div><div class="recent-post-info"><a class="article-title" href="/2017/08/09/5.1%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="5.1 机器学习系统设计最佳实践">5.1 机器学习系统设计最佳实践</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-09T14:49:12.000Z" title="发表于 2017-08-09 22:49:12">2017-08-09</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:08:55.792Z" title="更新于 2020-08-06 19:08:55">2020-08-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/5-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">5. 机器学习系统设计</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/AI/">AI</a></span></div><div class="content">
+
+ 定义问题 进行需求分析，定义问题。不同类型的问题有各自适用的机器学习模型，如：图像分析采用CNN模型、推荐相关问题有专门的推荐算法、安全相关问题有异常检测模型等。所以脱离具体问题去讨论算法或模型是没有意义的。
+收集数据 收集数据的重要性：若数据集足够的大且包含了足够多的信息，在机器学习领域中普遍的共识是“取得成功的人不是拥有最好算法的人，而是拥有最多数据的人”。
+数据集获取方式：
+
+众包外包：从第三方获取被标记的数据集。
+手动收集数据并标记数据：需要考虑手动收集标记需要的时间。
+人工数据合成：在已有的数据上加上噪声合成新的数据，从而获得更多的数据。
+
+特征工程 将原始数据转变为特征，通过这些特征可以很好的描述这些数据，并且利用这些特征建立模型，能让模型在未知的数据上的表现出最优的性能。&lt;/br&gt;
+主要工作：
+
+从原始数据中清洗出特征数据和标注数据。
+对清洗出的特征和标注数据进行进一步处理，最终生成的数据集供训练和测试模型使用。如：异常点去除、样本采集、特征降维，特征归一化、特征组合等过程。
+
+一般步骤：
+
+提取特征：运用“头脑风暴”法，不考虑特征的重要性，从原始数据中 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2017/08/06/4.7%20%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="4.7 循环神经网络">     <img class="post_bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="4.7 循环神经网络"></a></div><div class="recent-post-info"><a class="article-title" href="/2017/08/06/4.7%20%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="4.7 循环神经网络">4.7 循环神经网络</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-06T07:45:49.000Z" title="发表于 2017-08-06 15:45:49">2017-08-06</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:08:49.255Z" title="更新于 2020-08-06 19:08:49">2020-08-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">4. 深度学习</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/AI/">AI</a></span></div><div class="content">4.7.1 循环神经网络基本模型 4.7.1.1 单向循环神经网络模型描述：
+输入：\(X_t\)向量表示\(t\)时刻输入层的值。
+隐藏层：\(A_t\)向量表示\(t\)时刻隐藏层的值，隐藏层的节点数与向量\(A_t\)的维度相同。
+输入层到隐藏层权重矩阵：\(U\)向量表示输入层到隐藏层的权重矩阵。
+隐藏层到输出层的权重矩阵：\(V\)向量表示隐藏层到输出层的权重矩阵。
+
+
+
+上次输出权重矩阵：隐藏层的值\(At\)不仅仅取决于当前这次的输入\(X_t\)，还取决于上一次隐藏层的值\(A{t-1}\)。权重矩阵 W就是隐藏层上一次的值作为这一次的输入的权重。 A_t=f(U*X_t+W*A_{t-1})\ \ \ \ \ \ \ （f为激活函数）
+输出层：\(o\)向量表示输出层的值。h_t=g(V*A_t )\ \ \ \ \  \ \ \  （ g为激活函数）
+
+
+特点：
+循环神经网络神经元的输出在下一个时间戳直接作用到自身，理论上神经元的输出可以受前面任意多个时刻输入的影响。而在前馈神经⽹络中，信息总是向前传播，从不反向回馈。
+理论上循环神经网络可以处理任意长度的输入。
+循 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">rocky</div><div class="author-info__description">知行合一</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives"><div class="headline">文章</div><div class="length_num">32</div></a></div><div class="card-info-data-item is-center">      <a href="/tags"><div class="headline">标签</div><div class="length_num">1</div></a></div><div class="card-info-data-item is-center"><a href="/categories"><div class="headline">分类</div><div class="length_num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rocskyfly"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/rocskyfly" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:rocskyfly@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-recent-item"><div class="aside-recent-post"><a class="aside-post-cover" href="/2017/09/17/%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90/" title="情感分析"><img class="aside-post-bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="情感分析"/></a><div class="aside-post-info"><a class="aside-post-title" href="/2017/09/17/%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90/" title="情感分析">情感分析</a><time class="aside-post_meta post-meta-date" datetime="2017-09-17T03:40:44.000Z" title="发表于 2017-09-17 11:40:44">2017-09-17</time></div></div><div class="aside-recent-post"><a class="aside-post-cover" href="/2017/09/10/GeneticAlgorithm/" title="基因算法求解函数极值"><img class="aside-post-bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基因算法求解函数极值"/></a><div class="aside-post-info"><a class="aside-post-title" href="/2017/09/10/GeneticAlgorithm/" title="基因算法求解函数极值">基因算法求解函数极值</a><time class="aside-post_meta post-meta-date" datetime="2017-09-10T06:03:13.000Z" title="发表于 2017-09-10 14:03:13">2017-09-10</time></div></div><div class="aside-recent-post"><a class="aside-post-cover" href="/2017/09/06/CatsVsDogsRecognization/" title="猫狗图像识别"><img class="aside-post-bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="猫狗图像识别"/></a><div class="aside-post-info"><a class="aside-post-title" href="/2017/09/06/CatsVsDogsRecognization/" title="猫狗图像识别">猫狗图像识别</a><time class="aside-post_meta post-meta-date" datetime="2017-09-06T14:30:13.000Z" title="发表于 2017-09-06 22:30:13">2017-09-06</time></div></div><div class="aside-recent-post"><a class="aside-post-cover" href="/2017/09/02/MnistRecognization/" title="手写数字图片识别（mnist）"><img class="aside-post-bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="手写数字图片识别（mnist）"/></a><div class="aside-post-info"><a class="aside-post-title" href="/2017/09/02/MnistRecognization/" title="手写数字图片识别（mnist）">手写数字图片识别（mnist）</a><time class="aside-post_meta post-meta-date" datetime="2017-09-02T10:00:48.000Z" title="发表于 2017-09-02 18:00:48">2017-09-02</time></div></div><div class="aside-recent-post"><a class="aside-post-cover" href="/2017/08/27/GenderPrediction/" title="男女性别预测"><img class="aside-post-bg" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="男女性别预测"/></a><div class="aside-post-info"><a class="aside-post-title" href="/2017/08/27/GenderPrediction/" title="男女性别预测">男女性别预测</a><time class="aside-post_meta post-meta-date" datetime="2017-08-27T05:10:21.000Z" title="发表于 2017-08-27 13:10:21">2017-08-27</time></div></div></div></div></div><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div><ul class="card-category-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">1. 人工智能与机器学习</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/2-%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/"><span class="card-category-list-name">2. 监督学习算法</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/3-%E9%9D%9E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/"><span class="card-category-list-name">3. 非监督学习算法</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">4. 深度学习</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/5-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"><span class="card-category-list-name">5. 机器学习系统设计</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Machine-Learning-Project/"><span class="card-category-list-name">Machine Learning Project</span><span class="card-category-list-count">9</span></a></li>
+                       
+            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/AI/" style="font-size: 16px; color: #999">AI</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2017/09/"><span class="card-archive-list-date">九月 2017</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2017/08/"><span class="card-archive-list-date">八月 2017</span><span class="card-archive-list-count">14</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2017/07/"><span class="card-archive-list-date">七月 2017</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2017/06/"><span class="card-archive-list-date">六月 2017</span><span class="card-archive-list-count">6</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="webinfo-article-name">文章数目 :</div><div class="webinfo-article-count">32</div></div><div class="webinfo-item"><div class="webinfo-runtime-name">已运行时间 :</div><div class="webinfo-runtime-count" id="webinfo-runtime-count" publish_date="6/7/2016 00:00:00">     </div></div><div class="webinfo-item">      <div class="webinfo-site-uv-name">本站访客数 :</div><div class="webinfo-site-uv-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="webinfo-site-name">本站总访问量 :</div><div class="webinfo-site-pv-count" id="busuanzi_value_site_pv"></div></div></div></div></div></div></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2020 By rocky</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

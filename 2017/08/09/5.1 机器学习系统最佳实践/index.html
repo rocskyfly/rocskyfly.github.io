@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>5.1 机器学习系统设计最佳实践 | Just Do &quot;IT&quot;!</title><meta name="description" content="定义问题 进行需求分析，定义问题。不同类型的问题有各自适用的机器学习模型，如：图像分析采用CNN模型、推荐相关问题有专门的推荐算法、安全相关问题有异常检测模型等。所以脱离具体问题去讨论算法或模型是没有意义的。 收集数据 收集数据的重要性：若数据集足够的大且包含了足够多的信息，在机器学习领域中普遍的共识是“取得成功的人不是拥有最好算法的人，而是拥有最多数据的人”。 数据集获取方式：  众包外包"><meta name="keywords" content="AI"><meta name="author" content="rocky"><meta name="copyright" content="rocky"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rocskyfly.github.io/2017/08/09/5.1%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="PH6KU3kOF4F9q92a2F8wzgd-3WsMkvoyfGpXANy5d_4"/><meta name="baidu-site-verification" content="I6h5XDjQdi"/><meta property="og:type" content="article"><meta property="og:title" content="5.1 机器学习系统设计最佳实践"><meta property="og:url" content="https://rocskyfly.github.io/2017/08/09/5.1%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"><meta property="og:site_name" content="Just Do &quot;IT&quot;!"><meta property="og:description" content="定义问题 进行需求分析，定义问题。不同类型的问题有各自适用的机器学习模型，如：图像分析采用CNN模型、推荐相关问题有专门的推荐算法、安全相关问题有异常检测模型等。所以脱离具体问题去讨论算法或模型是没有意义的。 收集数据 收集数据的重要性：若数据集足够的大且包含了足够多的信息，在机器学习领域中普遍的共识是“取得成功的人不是拥有最好算法的人，而是拥有最多数据的人”。 数据集获取方式：  众包外包"><meta property="og:image" content="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><meta property="article:published_time" content="2017-08-09T14:49:12.000Z"><meta property="article:modified_time" content="2020-08-06T11:08:55.792Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: '',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?062fa43d25a45e3739e2cb0cab1d4ff6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-06 19:08:55'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">32</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">1</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text"> 定义问题 </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%B6%E9%9B%86%E6%95%B0%E6%8D%AE"><span class="toc-number">2.</span> <span class="toc-text">收集数据 </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">特征工程 </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text"> 选择算法 </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">训练算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%AE%97%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text"> 测试算法 </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E4%BC%98"><span class="toc-number">7.</span> <span class="toc-text">系统调优</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Just Do &quot;IT&quot;!</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">5.1 机器学习系统设计最佳实践</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-09T14:49:12.000Z" title="发表于 2017-08-09 22:49:12">2017-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:08:55.792Z" title="更新于 2020-08-06 19:08:55">2020-08-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/5-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">5. 机器学习系统设计</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/5.1%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.png?raw=true" alt="机器学习系统最佳实践"></p>
+<a id="more"></a>
+<h1 id="定义问题"><a href="#定义问题" class="headerlink" title=" 定义问题 "></a><font color=blue> 定义问题 </font></h1><p>进行需求分析，定义问题。不同类型的问题有各自适用的机器学习模型，如：图像分析采用CNN模型、推荐相关问题有专门的推荐算法、安全相关问题有异常检测模型等。所以脱离具体问题去讨论算法或模型是没有意义的。</p>
+<h1 id="收集数据"><a href="#收集数据" class="headerlink" title="收集数据 "></a><font color=blue>收集数据 </font></h1><p><strong>收集数据的重要性：</strong>若数据集足够的大且包含了足够多的信息，在机器学习领域中普遍的共识是“取得成功的人不是拥有最好算法的人，而是拥有最多数据的人”。</p>
+<p><strong>数据集获取方式：</strong></p>
+<ol>
+<li>众包外包：从第三方获取被标记的数据集。</li>
+<li>手动收集数据并标记数据：需要考虑手动收集标记需要的时间。</li>
+<li>人工数据合成：在已有的数据上加上噪声合成新的数据，从而获得更多的数据。</li>
+</ol>
+<h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程 "></a><font color=blue>特征工程 </font></h1><p>将原始数据转变为特征，通过这些特征可以很好的描述这些数据，并且利用这些特征建立模型，能让模型在未知的数据上的表现出最优的性能。&lt;/br&gt;</p>
+<p><strong>主要工作：</strong></p>
+<ol>
+<li>从原始数据中清洗出特征数据和标注数据。</li>
+<li>对清洗出的特征和标注数据进行进一步处理，最终生成的数据集供训练和测试模型使用。如：异常点去除、样本采集、特征降维，特征归一化、特征组合等过程。</li>
+</ol>
+<p><strong>一般步骤：</strong></p>
+<ol>
+<li>提取特征：运用“头脑风暴”法，不考虑特征的重要性，从原始数据中提取尽可能多的特征。</li>
+<li>设计特征：根据具体的问题，可以采用自动特征提取、手工构造特征，或两者混合。</li>
+<li>选择特征：使用不同的特征重要性评分和特征选择方法进行特征选择。</li>
+<li>评估模型：使用选择的特征进行建模，同时使用已知的数据来评估模型的精度。</li>
+</ol>
+<p><strong>特征选择原则：</strong></p>
+<ol>
+<li>特征能提供有用信息：若某一特征概率均匀分布即为无用。</li>
+<li>特征之间需独立：获取非冗余信息。</li>
+<li>特征需简单：缩短对特征学习的时间。</li>
+</ol>
+<h1 id="选择算法"><a href="#选择算法" class="headerlink" title=" 选择算法 "></a><font color=blue> 选择算法 </font></h1><ol>
+<li>整体原则：头脑风暴列出尽可能多的算法，从中选取最简单、最适合的算法，快速实现的算法，建立模型。</li>
+<li>若想要预测目标变量的值，则可以选择监督学习算法：需要进一步确定目标变量类型，若目标变量是离散型，则可以选择分类器算法；若目标变量是连续型的数值，则需要选择回归算法。</li>
+<li>若不是预测目标变量的值，可以选择无监督学习算法：进一步分析，若需要将数据是离散的，则使用聚类算法；若需要估计数据与每个分组的相似程度，则需要使用密度估计算法。</li>
+</ol>
+<h1 id="训练算法"><a href="#训练算法" class="headerlink" title="训练算法"></a><font color=blue>训练算法</font></h1><p>将训练数据集输入到算法，完成算法训练，获得训练模型。</p>
+<h1 id="测试算法"><a href="#测试算法" class="headerlink" title=" 测试算法 "></a><font color=blue> 测试算法 </font></h1><p>将测试数据集输入模型，评估模型。对于监督学习则评估模型预测目标变量值的准确率，对于非监督学习则利用其他的评测手段来检验算法的成功率。</p>
+<h1 id="系统调优"><a href="#系统调优" class="headerlink" title="系统调优"></a><font color=blue>系统调优</font></h1><p>根据验证的结果，运用多种工具，评估算法，如：绘制学习曲线，进行误差分析等。根据最终分析的结果，改进或更换特征或算法。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">rocky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rocskyfly.github.io/2017/08/09/5.1%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">https://rocskyfly.github.io/2017/08/09/5.1%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rocskyfly.github.io" target="_blank">Just Do "IT"!</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"><div class="social-share" data-image="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/08/12/5.2%20%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/"><img class="prev-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">5.2 如何评估机器学习算法?</div></div></a></div><div class="next-post pull-right"><a href="/2017/08/06/4.7%20%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><img class="next-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">4.7 循环神经网络</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2017/06/03/1. 人工智能与机器学习/" title="人工智能与机器学习"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-06-03</div><div class="relatedPosts_title">人工智能与机器学习</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/17/情感分析/" title="情感分析"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-17</div><div class="relatedPosts_title">情感分析</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/10/GeneticAlgorithm/" title="基因算法求解函数极值"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-10</div><div class="relatedPosts_title">基因算法求解函数极值</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/06/CatsVsDogsRecognization/" title="猫狗图像识别"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-06</div><div class="relatedPosts_title">猫狗图像识别</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/02/MnistRecognization/" title="手写数字图片识别（mnist）"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-02</div><div class="relatedPosts_title">手写数字图片识别（mnist）</div></div></a></div><div class="relatedPosts_item"><a href="/2017/08/27/GenderPrediction/" title="男女性别预测"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-08-27</div><div class="relatedPosts_title">男女性别预测</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2020 By rocky</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: 'YLuVKqugCBNyBNoFY6T2wrBo-gzGzoHsz',
+      appKey: 'HceLSo2qhUCbb21WUiHD9bcY',
+      placeholder: '请在此输入您的留言...',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

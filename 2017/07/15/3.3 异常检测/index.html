@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3.3 异常检测 | Just Do &quot;IT&quot;!</title><meta name="description" content="异常检测主要用于非监督学习问题，但它又类似于一些监督学习问题，但又无法根据结果变量y 的值来确定数据是否真的是异常的。  3.3.1 异常检测与高斯分布 异常检测基本概念：描述：给定假设数据都为正常的数据集\(\{x^{(1)}, x^{(2)} ,…, x^{(m)}\} x∈R^n\)，判断测试数据\(x{test}\)属于正常数据的可能性\(p(x)\)，即判断\(x{test}\)是不是异"><meta name="keywords" content="AI"><meta name="author" content="rocky"><meta name="copyright" content="rocky"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rocskyfly.github.io/2017/07/15/3.3%20%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="PH6KU3kOF4F9q92a2F8wzgd-3WsMkvoyfGpXANy5d_4"/><meta name="baidu-site-verification" content="I6h5XDjQdi"/><meta property="og:type" content="article"><meta property="og:title" content="3.3 异常检测"><meta property="og:url" content="https://rocskyfly.github.io/2017/07/15/3.3%20%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B/"><meta property="og:site_name" content="Just Do &quot;IT&quot;!"><meta property="og:description" content="异常检测主要用于非监督学习问题，但它又类似于一些监督学习问题，但又无法根据结果变量y 的值来确定数据是否真的是异常的。  3.3.1 异常检测与高斯分布 异常检测基本概念：描述：给定假设数据都为正常的数据集\(\{x^{(1)}, x^{(2)} ,…, x^{(m)}\} x∈R^n\)，判断测试数据\(x{test}\)属于正常数据的可能性\(p(x)\)，即判断\(x{test}\)是不是异"><meta property="og:image" content="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><meta property="article:published_time" content="2017-07-15T07:18:44.000Z"><meta property="article:modified_time" content="2020-08-06T11:07:53.447Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: '',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?062fa43d25a45e3739e2cb0cab1d4ff6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-06 19:07:53'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">32</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">1</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#3-3-1-%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E4%B8%8E%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="toc-number">1.</span> <span class="toc-text">3.3.1 异常检测与高斯分布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text"> 异常检测基本概念：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%EF%BC%88%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%EF%BC%89%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text"> 高斯分布（正态分布）：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-3-2-%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9F%E8%AF%84%E4%BB%B7"><span class="toc-number">2.</span> <span class="toc-text">3.3.2 异常检测系统评价</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E4%BB%B7%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text"> 评价方法：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text"> 注意点：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-3-3-%E5%A4%9A%E5%85%83%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E4%B8%8E%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B"><span class="toc-number">3.</span> <span class="toc-text">3.3.3 多元高斯分布与异常检测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%85%83%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text"> 多元高斯分布：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%85%83%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text"> 多元高斯分布异常检测算法：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%85%83%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8E%9F%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text"> 多元高斯分布模型与原高斯分布模型的关系：</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Just Do &quot;IT&quot;!</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">3.3 异常检测</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-07-15T07:18:44.000Z" title="发表于 2017-07-15 15:18:44">2017-07-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:07:53.447Z" title="更新于 2020-08-06 19:07:53">2020-08-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/3-%E9%9D%9E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/">3. 非监督学习算法</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>异常检测主要用于非监督学习问题，但它又类似于一些监督学习问题，但又无法根据结果变量y 的值来确定数据是否真的是异常的。</p>
+<a id="more"></a>
+<h1 id="3-3-1-异常检测与高斯分布"><a href="#3-3-1-异常检测与高斯分布" class="headerlink" title="3.3.1 异常检测与高斯分布"></a><font color=blue>3.3.1 异常检测与高斯分布</font></h1><h2 id="异常检测基本概念："><a href="#异常检测基本概念：" class="headerlink" title=" 异常检测基本概念："></a><font color=DodgerBlue> 异常检测基本概念：</font></h2><p><strong>描述：</strong>给定假设数据都为正常的数据集\(\{x^{(1)}, x^{(2)} ,…, x^{(m)}\} x∈R^n\)，判断测试数据\(x<em>{test}\)属于正常数据的可能性\(p(x)\)，即判断\(x</em>{test}\)是不是异常的：</p>
+<script type="math/tex; mode=display">
+\begin {cases}
+p(x)<ε\ \ \ \ anormal\\p(x)≥ε\ \ \ \ normal
+\end {cases}</script><p><strong>异常检测与监督学习：</strong>对于正样本的数量很少甚至为零的问题，通常使用的是异常检测算法。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/3.3.1%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E4%B8%8E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0.png?raw=true" alt="异常检测与监督学习"></p>
+<h2 id="高斯分布（正态分布）："><a href="#高斯分布（正态分布）：" class="headerlink" title=" 高斯分布（正态分布）："></a><font color=DodgerBlue> 高斯分布（正态分布）：</font></h2><p><strong>基本概念：</strong>变量\(x\)符合高斯分布\(x~Ν(μ,σ^2)\)则其概率密度函数为:<script type="math/tex">p(x;μ,σ^2 )=\frac 1 {\sqrt{2π} σ} exp(- \frac {(x-μ)^2}{2σ^2})</script></p>
+<ul>
+<li>\(μ\)为变量\(x\)的均值：<script type="math/tex">μ= \frac {1}{m} ∑_{i=1}^m x^{(i)}</script></li>
+<li>\(σ\)为变量\(x\)的方差：<script type="math/tex">σ^2=\frac {1}{m} ∑_{i=1}^m (x^{(i)}-μ)^2</script></li>
+<li>统计学中对于方差通常只除以\(m-1\)。在实际使用中，到底是选择使用\(m\)还是\(m-1\)其实区别很小，只要有一个还算大的训练集，在机器学习领域更习惯使用\(m\) 。</li>
+</ul>
+<p><strong>高斯分布异常检测算法：</strong></p>
+<ul>
+<li>给定数据训练集：\(\{x^{(1)}, x^{(2)} ,…, x^{(m)}\} x∈R^n\)</li>
+<li>计算每个特征的均值和方差：<script type="math/tex">μ_j=\frac {1}{m} ∑_{i=1}^m x_j^{(i)}\\ σ_j^2=\frac {1}{m} ∑_{i=1}^m (x_j^{(i)}-μ_j)^2</script></li>
+<li>给定新的实例x，根据独立估计，计算:<script type="math/tex">p(x)=∏_{j=1}^n p(x;μ_j,σ_j^2 ) =∏_{j=1}^n \frac {1}{\sqrt {2π} σ_j} exp(- \frac {(x-μ_j)^2}{2σ_j^2})</script><br>\(当p(x)&lt;ℇ时，实例x为异常\)</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/3.3.2%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%A4%BA%E4%BE%8B.png?raw=true" alt="异常检测示例"></p>
+<h1 id="3-3-2-异常检测系统评价"><a href="#3-3-2-异常检测系统评价" class="headerlink" title="3.3.2 异常检测系统评价"></a><font color=blue>3.3.2 异常检测系统评价</font></h1><p>当在开发一个异常检测系统时，从带标记（异常或正常）的数据着手，从其中选择一部分正常数据用于构建训练集，然后用剩下的正常数据和异常数据混合的数据构成交叉检验集和测试集。</p>
+<h2 id="评价方法："><a href="#评价方法：" class="headerlink" title=" 评价方法："></a><font color=DodgerBlue> 评价方法：</font></h2><ol>
+<li>将正常的数据随机分成训练集（60%）、交叉验证集（20%）和测试集（20%），将异常的数据随机分成交叉验证集（50%）和测试集（50%）</li>
+<li>根据训练集，估计特征的平均值和方差并构建\(p(x)\)函数。</li>
+<li>对交叉检验集，尝试使用不同的 \(ε \)值作为阀值，并预测数据是否异常，根据F\(F_1  Score\)查准率与查全率的比例来选择ε。</li>
+<li>选出 \(ε \)后，针对测试集进行预测，计算异常检验系统的\(F_1  Score\)或查准率与查全率之比。</li>
+</ol>
+<h2 id="注意点："><a href="#注意点：" class="headerlink" title=" 注意点："></a><font color=DodgerBlue> 注意点：</font></h2><p><strong>特征处理：</strong>对于异常检测算法，所选择的特征要符合高斯分布，如果某个特征的分布不是高斯分布，异常检测算法也能够工作，但是最好还是将数据转换成高斯分布，如使用对数函数：\(x = log(x+c) ,其中c 为非负常数\)其中c 为非负常数；或者\(x=x^c , c 为0-1 之间的一个分数\) 等方法。</p>
+<p><strong>误差分析：</strong>一个常见的问题是一些异常的数据可能也会有较高的 \(p(x)\)值，因而被算法认为是正常的。这种情况下通过误差分析那些被算法错误预测为正常的数据，观察能否找出一些问题。如：需要增加一些新的特征，增加这些新特征后获得的新算法能够帮助更好地进行异常检测。</p>
+<h1 id="3-3-3-多元高斯分布与异常检测"><a href="#3-3-3-多元高斯分布与异常检测" class="headerlink" title="3.3.3 多元高斯分布与异常检测"></a><font color=blue>3.3.3 多元高斯分布与异常检测</font></h1><h2 id="多元高斯分布："><a href="#多元高斯分布：" class="headerlink" title=" 多元高斯分布："></a><font color=DodgerBlue> 多元高斯分布：</font></h2><p>变量\(x\)符合多元高斯分布，则其概率密度函数为:<script type="math/tex">p(x)=\frac {1}{(2π)^{n/2} |Σ|^{1/2}} exp(-\frac {1}{2} (x-μ)^T Σ^{-1} (x-μ))</script></p>
+<p>\(μ\)为变量\(x\)的均值：<script type="math/tex">μ=\frac {1}{m} ∑_{i=1}^m x^{(i)}</script></p>
+<p>\(Σ\)为变量\(x\)的协方差矩阵：<script type="math/tex">Σ=\frac {1}{m} ∑_{i=1}^n (x^{(i)}-μ)(x^{(i)}-μ)^T\ \ \  Σ∈R^{n×n}</script></p>
+<h2 id="多元高斯分布异常检测算法："><a href="#多元高斯分布异常检测算法：" class="headerlink" title=" 多元高斯分布异常检测算法："></a><font color=DodgerBlue> 多元高斯分布异常检测算法：</font></h2><ol>
+<li>给定数据集：\(\{x^{(1)}, x^{(2)} ,…, x^{(m)}\} x∈R^n\) </li>
+<li>计算所有特征的平均值及协方差矩阵Σ：<script type="math/tex; mode=display">μ=\frac {1}{m} ∑_{i=1}^m x^{(i)} \\
+Σ=\frac {1}{m} ∑_{i=1}^n (x^{(i)}-μ)(x^{(i)}-μ)^T\ \ \  Σ∈R^{n×n}</script></li>
+<li>给定新的实例x计算：<script type="math/tex">p(x)=\frac {1}{(2π)^{n/2} |Σ|^{1/2}} exp(-\frac {1}{2} (x-μ)^T Σ^{-1} (x-μ))</script>当\(p(x)&lt;ℇ\)时，实例\(x\)为异常.</li>
+</ol>
+<h2 id="多元高斯分布模型与原高斯分布模型的关系："><a href="#多元高斯分布模型与原高斯分布模型的关系：" class="headerlink" title=" 多元高斯分布模型与原高斯分布模型的关系："></a><font color=DodgerBlue> 多元高斯分布模型与原高斯分布模型的关系：</font></h2><p>原高斯分布模型被广泛使用着，若特征之间在某种程度上存在相互关联的情况，可以通过构造新新特征的方法来捕捉这些相关性；若训练集不是太大，并且没有太多的特征，可以使用多元高斯分布模型。</p>
+<p>当\(Σ\)为以下对角矩阵时，多元高斯分布，退化成原高斯分布。</p>
+<script type="math/tex; mode=display">
+Σ=\left [
+\begin {matrix}
+δ_1^2&0&0\\
+…&…&…\\
+0&0&δ_n^2
+\end {matrix}
+\right ]</script><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/3.3.3%E6%BA%90%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%A4%9A%E5%85%83%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E6%A8%A1%E5%9E%8B.png?raw=true" alt="原高斯分布模型与多元高斯分布模型"></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">rocky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rocskyfly.github.io/2017/07/15/3.3%20%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B/">https://rocskyfly.github.io/2017/07/15/3.3%20%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rocskyfly.github.io" target="_blank">Just Do "IT"!</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"><div class="social-share" data-image="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/07/16/3.4%20%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/"><img class="prev-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">3.4 推荐系统</div></div></a></div><div class="next-post pull-right"><a href="/2017/07/07/3.2%20%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E7%B1%BB/"><img class="next-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">3.2 降维算法类</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2017/06/03/1. 人工智能与机器学习/" title="人工智能与机器学习"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-06-03</div><div class="relatedPosts_title">人工智能与机器学习</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/17/情感分析/" title="情感分析"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-17</div><div class="relatedPosts_title">情感分析</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/10/GeneticAlgorithm/" title="基因算法求解函数极值"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-10</div><div class="relatedPosts_title">基因算法求解函数极值</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/06/CatsVsDogsRecognization/" title="猫狗图像识别"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-06</div><div class="relatedPosts_title">猫狗图像识别</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/02/MnistRecognization/" title="手写数字图片识别（mnist）"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-02</div><div class="relatedPosts_title">手写数字图片识别（mnist）</div></div></a></div><div class="relatedPosts_item"><a href="/2017/08/27/GenderPrediction/" title="男女性别预测"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-08-27</div><div class="relatedPosts_title">男女性别预测</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2020 By rocky</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: 'YLuVKqugCBNyBNoFY6T2wrBo-gzGzoHsz',
+      appKey: 'HceLSo2qhUCbb21WUiHD9bcY',
+      placeholder: '请在此输入您的留言...',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

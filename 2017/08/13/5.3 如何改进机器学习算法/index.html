@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>5.3 如何改进机器学习算法? | Just Do &quot;IT&quot;!</title><meta name="description" content="5.3.1 机器学习算法一般改进方法 获得更多的训练实例可解决高方差（未来）。   改变特征数量减少特征数量可解决高方差（未来），增加特征数量可解决高偏差（现在）。  改变多项式次数减少多项式次数可解决高方差（未来），增加多项式次数可解决高偏差（现在）。  改变正则化参数作用：减小正则化参数可解决高偏差（现在），增加正则化参数可解决高方差（未来）。 基本思想：基于模型复杂性对其进行惩罚，偏好那些相"><meta name="keywords" content="AI"><meta name="author" content="rocky"><meta name="copyright" content="rocky"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rocskyfly.github.io/2017/08/13/5.3%20%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="PH6KU3kOF4F9q92a2F8wzgd-3WsMkvoyfGpXANy5d_4"/><meta name="baidu-site-verification" content="I6h5XDjQdi"/><meta property="og:type" content="article"><meta property="og:title" content="5.3 如何改进机器学习算法?"><meta property="og:url" content="https://rocskyfly.github.io/2017/08/13/5.3%20%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/"><meta property="og:site_name" content="Just Do &quot;IT&quot;!"><meta property="og:description" content="5.3.1 机器学习算法一般改进方法 获得更多的训练实例可解决高方差（未来）。   改变特征数量减少特征数量可解决高方差（未来），增加特征数量可解决高偏差（现在）。  改变多项式次数减少多项式次数可解决高方差（未来），增加多项式次数可解决高偏差（现在）。  改变正则化参数作用：减小正则化参数可解决高偏差（现在），增加正则化参数可解决高方差（未来）。 基本思想：基于模型复杂性对其进行惩罚，偏好那些相"><meta property="og:image" content="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><meta property="article:published_time" content="2017-08-13T07:21:11.000Z"><meta property="article:modified_time" content="2020-08-06T11:09:09.798Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: '',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?062fa43d25a45e3739e2cb0cab1d4ff6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-06 19:09:09'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">32</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">1</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#5-3-1-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B8%80%E8%88%AC%E6%94%B9%E8%BF%9B%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">5.3.1 机器学习算法一般改进方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E6%9B%B4%E5%A4%9A%E7%9A%84%E8%AE%AD%E7%BB%83%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.1.</span> <span class="toc-text"> 获得更多的训练实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B9%E5%8F%98%E7%89%B9%E5%BE%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text"> 改变特征数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B9%E5%8F%98%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%AC%A1%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text"> 改变多项式次数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B9%E5%8F%98%E6%AD%A3%E5%88%99%E5%8C%96%E5%8F%82%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text"> 改变正则化参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%EF%BC%9A"><span class="toc-number">1.4.1.</span> <span class="toc-text">作用：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3%EF%BC%9A"><span class="toc-number">1.4.2.</span> <span class="toc-text">基本思想：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96%E5%88%86%E7%B1%BB%EF%BC%9A"><span class="toc-number">1.4.3.</span> <span class="toc-text">正则化分类：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-3-2-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%94%B9%E8%BF%9B%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">5.3.2 神经网络改进方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-2-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%94%B9%E8%BF%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">5.3.2.1 神经网络改进基本方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E9%A6%96%E8%A6%81%E5%8E%9F%E5%88%99%EF%BC%9A"><span class="toc-number">2.1.1.</span> <span class="toc-text">建立神经网络的首要原则：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%9A%84%E7%A5%9E%E7%BB%8F%E5%85%83%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="toc-number">2.1.2.</span> <span class="toc-text">选择不同的神经元类型：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="toc-number">2.1.3.</span> <span class="toc-text">选择不同的代价函数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BC%98%E5%8C%96%EF%BC%9A"><span class="toc-number">2.1.4.</span> <span class="toc-text">权重初始化优化：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-2-2-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%B6%85%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.2.</span> <span class="toc-text"> 5.3.2.2 神经网络的超参数选择步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E7%94%A8%E5%AE%BD%E6%B3%9B%E7%AD%96%E7%95%A5%E5%85%88%E5%A4%A7%E8%87%B4%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%BD%91%E7%BB%9C%EF%BC%9A"><span class="toc-number">2.2.1.</span> <span class="toc-text">首先用宽泛策略先大致搭建一个简单网络：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E6%AC%A1%E8%B0%83%E6%95%B4%E5%AD%A6%E4%B9%A0%E7%8E%87-%CE%B7-%EF%BC%9A"><span class="toc-number">2.2.2.</span> <span class="toc-text">其次调整学习率 \(η\)：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E6%AC%A1%E7%A1%AE%E5%AE%9A%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%9B%9E%E5%90%88%E6%95%B0Epoch%EF%BC%9A"><span class="toc-number">2.2.3.</span> <span class="toc-text">再次确定学习的回合数Epoch：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E7%A1%AE%E5%AE%9A%E6%AD%A3%E5%88%99%E5%8C%96%E5%8F%82%E6%95%B0%CE%BB-%EF%BC%9A"><span class="toc-number">2.2.4.</span> <span class="toc-text">最后确定正则化参数λ ：</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Just Do &quot;IT&quot;!</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">5.3 如何改进机器学习算法?</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-08-13T07:21:11.000Z" title="发表于 2017-08-13 15:21:11">2017-08-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-06T11:09:09.798Z" title="更新于 2020-08-06 19:09:09">2020-08-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/5-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">5. 机器学习系统设计</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="5-3-1-机器学习算法一般改进方法"><a href="#5-3-1-机器学习算法一般改进方法" class="headerlink" title="5.3.1 机器学习算法一般改进方法"></a><font color=blue>5.3.1 机器学习算法一般改进方法</font></h1><h2 id="获得更多的训练实例"><a href="#获得更多的训练实例" class="headerlink" title=" 获得更多的训练实例"></a><font color=DodgerBlue> 获得更多的训练实例</font></h2><p>可解决高方差（未来）。</p>
+<a id="more"></a>
+<h2 id="改变特征数量"><a href="#改变特征数量" class="headerlink" title=" 改变特征数量"></a><font color=DodgerBlue> 改变特征数量</font></h2><p>减少特征数量可解决高方差（未来），增加特征数量可解决高偏差（现在）。</p>
+<h2 id="改变多项式次数"><a href="#改变多项式次数" class="headerlink" title=" 改变多项式次数"></a><font color=DodgerBlue> 改变多项式次数</font></h2><p>减少多项式次数可解决高方差（未来），增加多项式次数可解决高偏差（现在）。</p>
+<h2 id="改变正则化参数"><a href="#改变正则化参数" class="headerlink" title=" 改变正则化参数"></a><font color=DodgerBlue> 改变正则化参数</font></h2><h3 id="作用："><a href="#作用：" class="headerlink" title="作用："></a>作用：</h3><p>减小正则化参数可解决高偏差（现在），增加正则化参数可解决高方差（未来）。</p>
+<h3 id="基本思想："><a href="#基本思想：" class="headerlink" title="基本思想："></a>基本思想：</h3><p>基于模型复杂性对其进行惩罚，偏好那些相对简单的能更好的泛化的模型，可以解决过度拟合问题。通过增加一个额外的项到代价函数上，这个项叫做正则化项，消除或降低过拟合的影响，缺点是惩罚会造成欠拟合很难校准。</p>
+<h3 id="正则化分类："><a href="#正则化分类：" class="headerlink" title="正则化分类："></a>正则化分类：</h3><ol>
+<li>L1 正则化：\(C=C_0+λ/n ∑_w |w|\) ，在原始代价函数 \(C_0\) 上加上一个权重绝对值的和。倾向于聚集权重在相对少量的高重要度连接上，而其他权重就会被驱使向 0 接近。 </li>
+<li>L2正则化：\(C=C_0+λ/n ∑_w w^2\)，在原始代价函数 \(C_0\) 上加上一个权重平方和。可以看做是一种寻找小的权重和最小化原始的代价函数之间的折中，\(λ\)  越小就偏向于最小化原始代价函数，反之倾向于小的权重。</li>
+</ol>
+<font color=orangered>λ=0,0.01,0.02,0.04,0.08,…,10</font>
+
+<h1 id="5-3-2-神经网络改进方法"><a href="#5-3-2-神经网络改进方法" class="headerlink" title="5.3.2 神经网络改进方法"></a><font color=blue>5.3.2 神经网络改进方法</font></h1><p>神经网络优化涉及很多的神经网络超参数，分类如下：</p>
+<ol>
+<li>影响分类正确率：神经网络层数 \( L\)、隐藏层中神经元个数 \( j\)、输出编码方式、正则化参数 \(λ\)。</li>
+<li>影响代价函数曲线下降速度，同时有时也会影响分类正确率：权重初始化、代价函数的选择、神经元激活函数的种类。</li>
+<li>影响模型分类正确率和训练用总体时间：学习的回合数Epoch、小批量数据 mini-batch 的大小、参加训练模型数据的规模。</li>
+<li>影响学习速度，主要体现为代价函数曲线的下降速度：学习率 \(η\)</li>
+</ol>
+<h2 id="5-3-2-1-神经网络改进基本方法"><a href="#5-3-2-1-神经网络改进基本方法" class="headerlink" title="5.3.2.1 神经网络改进基本方法"></a><font color=DodgerBlue>5.3.2.1 神经网络改进基本方法</font></h2><h3 id="建立神经网络的首要原则："><a href="#建立神经网络的首要原则：" class="headerlink" title="建立神经网络的首要原则："></a>建立神经网络的首要原则：</h3><ul>
+<li>对于神经网络中的隐藏层的层数的选择，通常从一层开始逐渐增加层数，针对不同隐藏层的神经网络训练神经网络，然后选择交叉验证集代价最小的神经网络。</li>
+<li>通常选择较大的神经网络并采用正则化处理会比采用较小的神经网络效果要好。<ul>
+<li>使用较小的神经网络，特征参数较少，容易导致高偏差和欠拟合，但计算代价较小。</li>
+<li>使用较大的神经网络，特征参数较多，容易导致高方差和过拟合，可以通过正则化手段来调整而更加适应数据，虽然计算代价比较大。</li>
+<li>检测过度拟合的明显方法是跟踪测试数据集合上的准确率随训练变化情况，或绘制学习曲线。若测试数据上的准确率不再提升，那么就停止训练。</li>
+</ul>
+</li>
+</ul>
+<h3 id="选择不同的神经元类型："><a href="#选择不同的神经元类型：" class="headerlink" title="选择不同的神经元类型："></a>选择不同的神经元类型：</h3><p> 在神经网络中S型函数激励的神经元较常见，除此之外还有tanh神经元、修正线性神经元等。</p>
+<h3 id="选择不同的代价函数："><a href="#选择不同的代价函数：" class="headerlink" title="选择不同的代价函数："></a>选择不同的代价函数：</h3><p><strong>代价函数必须具备的特性：</strong></p>
+<ul>
+<li>非负性：求和中的所有独立的项都是正数。</li>
+<li>趋于零：若对于所有的训练输入实际的输出接近目标值，代价函数值接近于零。</li>
+</ul>
+<p><strong>二次代价函数：</strong></p>
+<script type="math/tex; mode=display">C(w; b)=\frac {1}{2m}  ∑_x ∥y(x)- a∥2</script><ul>
+<li>神经元是通过改变权重和偏置，并以一个代价函数的偏导数（ \(\frac {∂C}{∂w}\) 和 \(\frac {∂C}{∂b}\) ）决定学习速度。二次代价函数会让学习变得很缓慢，学习缓慢实际上就是这些偏导数很小，当神经元的输出接近1的时候，S曲线变得相当平，\(σ’ (z)\) 就很小了，即 \(\frac {∂C}{∂w}\) 和 \(\frac {∂C}{∂b}\) 会非常小。</li>
+<li>当在神经元犯了明显的错误时，学习速度比学习快接近真实值的时候更加缓慢。<script type="math/tex; mode=display">
+\begin {cases}
+C=\frac {(y-a)^2}{2} ⇒^{a=σ(z)}  \frac {(y-σ(z))^2}{2} \\⇒^{z=wx+b} \frac {(y-σ(wx+b))^2}{2}\\
+\frac {∂C}{∂w}=(σ(z)-y)σ'(z)x ⇒^{x=1,y=0} σ(z) σ'(z)\\ 
+\frac {∂C}{∂b}=(σ(z)-y) σ'(z) ⇒^{x=1,y=0} σ(z) σ'(z)\\
+\end {cases}</script></li>
+</ul>
+<p><strong>交叉熵代价函数：</strong></p>
+<script type="math/tex; mode=display">C(w; b) =- \frac {1}{n}  ∑_x [y lna + (1-y) ln(1-a)]</script><ul>
+<li>学习速度更快，因为偏导数 \(\frac {∂C}{∂w}\) 和 \(\frac {∂C}{∂b}\) 消除了 \(σ’ (z)\) 的影响； </li>
+<li>\(\frac {∂C}{∂w}\) 和 \(\frac {∂C}{∂b}\) 输出中有误差的控制，误差越大，意味着更快的学习速度。</li>
+<li>在神经元犯了明显错误的时候，学习速度变得更快，且并不依赖于如何设置学习速率。</li>
+<li>若在输出神经元是 S 型神经元时，交叉熵一般都是更好的选择。<script type="math/tex; mode=display">
+\begin {cases}
+C = - \frac {1}{n}  ∑_x [y lna + (1-y) ln(1-a)] \\ ⇒^{a=σ(z)}- \frac {1}{n} ∑_x [ylnσ(z)  + (1-y)ln(1-σ(z))] \\
+σ(z)=\frac {1}{1+e^{-z}} →σ'(z)=σ(z)(1-σ(z))\\ 
+\frac {∂C}{∂w_j}=- \frac {1}{n} ∑_x (\frac {y}{σ(z)} -\frac {1-y}{(1-σ(z)} \frac {σ(z)}{∂w_j} \\⇒^{z=wx+b)} - \frac {1}{n} ∑_x (\frac {y}{σ(z)} -\frac {1-y}{(1-σ(z)} σ'(z) x_j \\⇒^{σ'(z)=σ(z)(1-σ(z))} - \frac {1}{n} ∑_x \frac {σ'(z)x_j}{σ(z)(1-σ(z))} (σ(z)-y) \\=\frac {1}{n}  ∑_x x_j (σ(z)-y)\\
+\frac {∂C}{∂b_j}=\frac {1}{n} ∑_x (σ(z)-y) 
+\end {cases}</script></li>
+<li>交叉熵推广到很多神经元的多层神经网络：假设  \(y=y_1,y_2,…\) 是输出神经元上的目标值，而 \(a_1^L, a_2^L ,…\) 是实际输出值，那么定义交叉熵： <script type="math/tex">C = - \frac {1}{n} ∑_x ∑_j [y_j lna_j^L  + (1-y_j )ln(1-a_j^L )]</script></li>
+</ul>
+<h3 id="权重初始化优化："><a href="#权重初始化优化：" class="headerlink" title="权重初始化优化："></a>权重初始化优化：</h3><ul>
+<li><p>模型假设：若一神经元网络有1000个输入，根据独立高斯随机变量来选择权重和偏置（被归一化为均值为 0，标准差 1），初始化了第一个隐藏层的权重。<br>若训练集的输入 \(x\) 有一半的输入为 1，另一半为0。某个隐藏神经元的带权输入 \(z=∑_j w_j x_j +b\) ，其中 500 个项消去了，\(z\) 是遍历总共 501 个归一化的高斯随机变量的和，包含 500 个权重项和额外的 1 个偏置项。因此 \(z\)  本身是一个均值为 0标准差为 \(\sqrt {501}  ≈ 22.4\) 的高斯分布。\(z\) 是一个非常宽的高斯分布，\(|z|\) 会变得非常的大，即 \( z ≫ 1\) 或者 \(z ≪ -1\)<br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/5.7%E7%8B%AC%E7%AB%8B%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96.png?raw=true" alt="独立高斯分布权重初始化"></p>
+</li>
+<li><p>问题分析：会出现隐藏神经元饱和现象</p>
+<ul>
+<li>隐藏神经元的输出 \(σ(z) \) 会接近 1 或者 0。也就表示隐藏神经元会饱和。</li>
+<li>在权重中进⾏微小的调整仅仅会给隐藏神经元的激活值带来极其微弱的改变。而这种微弱的改变也会影响网络中剩下的神经元，然后会带来相应的代价函数的改变。这些权重在进⾏梯度下降算法时会学习得⾮常缓慢。</li>
+<li>通过选择交叉熵代价函数可以解决在输出神经元上的错误值上饱和导致学习的下降，但对于隐藏神经元的饱和却一点作⽤都没有。</li>
+</ul>
+</li>
+<li>标准权重初始化：假设有 \(n<em>{in} \) 个输入权重的神经元，使用均值为 0 标准差为 \(\frac {1}{\sqrt {n</em>{in}}}\) 的高斯随机分布初始化这些权重。使用这种方法，会向下挤压高斯分布（有更尖锐的峰值），让神经元更不可能饱和，不大可能遇到学习速度下降的问题。<br><img src= "/img/loading.gif" data-lazy-src="https://github.com/rocskyfly/test/blob/master/5.8%E6%A0%87%E5%87%86%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96.png?raw=true" alt="标准权重初始化"></li>
+</ul>
+<h2 id="5-3-2-2-神经网络的超参数选择步骤"><a href="#5-3-2-2-神经网络的超参数选择步骤" class="headerlink" title=" 5.3.2.2 神经网络的超参数选择步骤"></a><font color=DodgerBlue> 5.3.2.2 神经网络的超参数选择步骤</font></h2><h3 id="首先用宽泛策略先大致搭建一个简单网络："><a href="#首先用宽泛策略先大致搭建一个简单网络：" class="headerlink" title="首先用宽泛策略先大致搭建一个简单网络："></a>首先用宽泛策略先大致搭建一个简单网络：</h3><ul>
+<li>确定神经元类型、代价函数、输出层的编码方式、输出层模式（是否采用softmax）、确定神经网络中隐层的数目以及每一个隐层中神经元的个数。</li>
+<li>使用简化的训练数据，验证简化的网络性能，逐渐增加神经元的个数和网络的层数。</li>
+<li>确定小批量数据的大小, 小批量数据大小的选择独立于网络整体架构外的参数，使用某些可以接受的值作为其他参数的选择，然后进行不同小批量数据大小的尝试。<ul>
+<li>小批量数据太小浪费矩阵库的快速计算能力，太大不能够足够频繁地更新权重。常见大小为bϵ[2,100]</li>
+<li>获得验证准确率的值随时间（非回合）变化的图，选择那个得到最快性能的提升的小批量数据大小。得到了小批量数据大小后就可以对其他的超参数进行优化。</li>
+</ul>
+</li>
+</ul>
+<h3 id="其次调整学习率-η-："><a href="#其次调整学习率-η-：" class="headerlink" title="其次调整学习率 \(η\)："></a>其次调整学习率 \(η\)：</h3><ul>
+<li>首先选择在训练数据上的代价函数立即开始下降而非震荡或增加时的 \(η\) 为阈值的大致估计。 </li>
+<li>若代价函数在训练的前面若干回合开始下降，则逐步增加 \(η\) 的量级，直到找到一个的值使得在开始若干回合代价就开始震荡或者增加。</li>
+<li>相反若代价函数曲线开始震荡或者增加，那就尝试减小量级直到找到代价在开始回合就下降的设定，取阈值的一半就确定了学习速率 。</li>
+</ul>
+<h3 id="再次确定学习的回合数Epoch："><a href="#再次确定学习的回合数Epoch：" class="headerlink" title="再次确定学习的回合数Epoch："></a>再次确定学习的回合数Epoch：</h3><ul>
+<li>提前停止表示在每个回合的最后，都要计算验证集上的分类准确率，当准确率不再提升，就终止它也就确定了迭代次数。另外提前停止也能够避免过度拟合。</li>
+<li>分类准确率在整体趋势下降的时候仍旧会抖动或者震荡。若在准确度刚开始下降的时候就停止，那么肯定会错过更好的选择。一般在分类准确率在一段时间内不再提升的时候终止。建议在更加深入地理解网络训练的方式时，仅仅在初始阶段使用 10 回合不提升规则，然后逐步地选择更久的回合，比如20回合不提升就终止，30回合不提升就终止，以此类推。</li>
+</ul>
+<h3 id="最后确定正则化参数λ-："><a href="#最后确定正则化参数λ-：" class="headerlink" title="最后确定正则化参数λ ："></a>最后确定正则化参数λ ：</h3><ul>
+<li>使用确定出来的 \(η\)，用验证数据来选择好的 \(λ \) 。尝试从 \(λ=1 \) 开始，然后根据验证集上的性能按照因子 10   增加或减少其值。一旦已经找到一个好的量级，可以改进 \(λ \) 的值。 </li>
+<li>确定 \(λ \) 后返回再重新优化 \(η\)。</li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">rocky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rocskyfly.github.io/2017/08/13/5.3%20%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/">https://rocskyfly.github.io/2017/08/13/5.3%20%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rocskyfly.github.io" target="_blank">Just Do "IT"!</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"><div class="social-share" data-image="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/08/15/5.4%20%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><img class="prev-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">5.4 大型机器学习系统应用技术</div></div></a></div><div class="next-post pull-right"><a href="/2017/08/12/5.2%20%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/"><img class="next-cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">5.2 如何评估机器学习算法?</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2017/06/03/1. 人工智能与机器学习/" title="人工智能与机器学习"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-06-03</div><div class="relatedPosts_title">人工智能与机器学习</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/17/情感分析/" title="情感分析"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-17</div><div class="relatedPosts_title">情感分析</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/10/GeneticAlgorithm/" title="基因算法求解函数极值"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-10</div><div class="relatedPosts_title">基因算法求解函数极值</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/06/CatsVsDogsRecognization/" title="猫狗图像识别"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-06</div><div class="relatedPosts_title">猫狗图像识别</div></div></a></div><div class="relatedPosts_item"><a href="/2017/09/02/MnistRecognization/" title="手写数字图片识别（mnist）"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-09-02</div><div class="relatedPosts_title">手写数字图片识别（mnist）</div></div></a></div><div class="relatedPosts_item"><a href="/2017/08/27/GenderPrediction/" title="男女性别预测"><img class="relatedPosts_cover" data-lazy-src="https://wx3.sinaimg.cn/mw690/9f9cf593gy1ghguidkoxhj20i909wmzp.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2017-08-27</div><div class="relatedPosts_title">男女性别预测</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2020 By rocky</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: 'YLuVKqugCBNyBNoFY6T2wrBo-gzGzoHsz',
+      appKey: 'HceLSo2qhUCbb21WUiHD9bcY',
+      placeholder: '请在此输入您的留言...',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
